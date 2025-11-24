@@ -1,21 +1,31 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class ButtonHoveredEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public GameObject hoverImage;
+    public List<GameObject> hoverImage;
     private void Start()
     {
-        hoverImage.SetActive(false);
+        foreach (var image in hoverImage)
+        {
+            image.SetActive(false);
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        hoverImage.SetActive(true);
+        foreach (var image in hoverImage)
+        {
+            image.SetActive(true);
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        hoverImage.SetActive(false);
+        foreach (var image in hoverImage)
+        {
+            image.SetActive(false);
+        }
     }
 }

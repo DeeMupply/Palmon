@@ -46,12 +46,75 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Dash"",
-                    ""type"": ""Button"",
+                    ""name"": ""Sprint"",
+                    ""type"": ""Value"",
                     ""id"": ""f2199fbe-9c44-4847-aa6d-75382a9ca874"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Double"",
                     ""processors"": """",
                     ""interactions"": ""Press"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Tool1"",
+                    ""type"": ""Button"",
+                    ""id"": ""e9eed427-6503-4764-8d12-8d9c2793b59d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tool2"",
+                    ""type"": ""Button"",
+                    ""id"": ""6d81ba33-da15-4033-ae8e-c53612729af9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tool3"",
+                    ""type"": ""Button"",
+                    ""id"": ""5cd423bd-6591-48d4-85b6-104dfbc87733"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tool4"",
+                    ""type"": ""Button"",
+                    ""id"": ""0396ae98-5ab1-4cf3-b1b6-5037a3ac2f63"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToolScan"",
+                    ""type"": ""Button"",
+                    ""id"": ""38c9a7c6-61de-42ef-80ec-a8dd06d4e4bf"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""9864a0b6-856a-4e70-a535-e99e8c7a3607"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Target"",
+                    ""type"": ""Button"",
+                    ""id"": ""03d74c50-a1b4-444f-9b46-e7b62cce15bb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -63,7 +126,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Dash"",
+                    ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -132,6 +195,83 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dc0b342b-94c2-4c1f-9e62-14e922f8523a"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tool1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64f7d041-c4a2-486f-ac7e-14dfad907a1b"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tool2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e36c39a6-b1bc-46cd-b69f-c98fdff77809"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tool3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""71fec8fc-db99-45b9-b748-3e04da651a76"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tool4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f24ca9bc-cc14-48b6-ac92-c75adb76704b"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a691eda0-28fa-491d-ad0b-297586fe4646"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Target"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""941e4fcb-1f9d-4880-9dd0-58adcbf766d3"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToolScan"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -142,7 +282,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_Tool1 = m_Player.FindAction("Tool1", throwIfNotFound: true);
+        m_Player_Tool2 = m_Player.FindAction("Tool2", throwIfNotFound: true);
+        m_Player_Tool3 = m_Player.FindAction("Tool3", throwIfNotFound: true);
+        m_Player_Tool4 = m_Player.FindAction("Tool4", throwIfNotFound: true);
+        m_Player_ToolScan = m_Player.FindAction("ToolScan", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_Target = m_Player.FindAction("Target", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -211,14 +358,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_Tool1;
+    private readonly InputAction m_Player_Tool2;
+    private readonly InputAction m_Player_Tool3;
+    private readonly InputAction m_Player_Tool4;
+    private readonly InputAction m_Player_ToolScan;
+    private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_Target;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        public InputAction @Tool1 => m_Wrapper.m_Player_Tool1;
+        public InputAction @Tool2 => m_Wrapper.m_Player_Tool2;
+        public InputAction @Tool3 => m_Wrapper.m_Player_Tool3;
+        public InputAction @Tool4 => m_Wrapper.m_Player_Tool4;
+        public InputAction @ToolScan => m_Wrapper.m_Player_ToolScan;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @Target => m_Wrapper.m_Player_Target;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -234,9 +395,30 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @Dash.started += instance.OnDash;
-            @Dash.performed += instance.OnDash;
-            @Dash.canceled += instance.OnDash;
+            @Sprint.started += instance.OnSprint;
+            @Sprint.performed += instance.OnSprint;
+            @Sprint.canceled += instance.OnSprint;
+            @Tool1.started += instance.OnTool1;
+            @Tool1.performed += instance.OnTool1;
+            @Tool1.canceled += instance.OnTool1;
+            @Tool2.started += instance.OnTool2;
+            @Tool2.performed += instance.OnTool2;
+            @Tool2.canceled += instance.OnTool2;
+            @Tool3.started += instance.OnTool3;
+            @Tool3.performed += instance.OnTool3;
+            @Tool3.canceled += instance.OnTool3;
+            @Tool4.started += instance.OnTool4;
+            @Tool4.performed += instance.OnTool4;
+            @Tool4.canceled += instance.OnTool4;
+            @ToolScan.started += instance.OnToolScan;
+            @ToolScan.performed += instance.OnToolScan;
+            @ToolScan.canceled += instance.OnToolScan;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+            @Target.started += instance.OnTarget;
+            @Target.performed += instance.OnTarget;
+            @Target.canceled += instance.OnTarget;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -247,9 +429,30 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @Dash.started -= instance.OnDash;
-            @Dash.performed -= instance.OnDash;
-            @Dash.canceled -= instance.OnDash;
+            @Sprint.started -= instance.OnSprint;
+            @Sprint.performed -= instance.OnSprint;
+            @Sprint.canceled -= instance.OnSprint;
+            @Tool1.started -= instance.OnTool1;
+            @Tool1.performed -= instance.OnTool1;
+            @Tool1.canceled -= instance.OnTool1;
+            @Tool2.started -= instance.OnTool2;
+            @Tool2.performed -= instance.OnTool2;
+            @Tool2.canceled -= instance.OnTool2;
+            @Tool3.started -= instance.OnTool3;
+            @Tool3.performed -= instance.OnTool3;
+            @Tool3.canceled -= instance.OnTool3;
+            @Tool4.started -= instance.OnTool4;
+            @Tool4.performed -= instance.OnTool4;
+            @Tool4.canceled -= instance.OnTool4;
+            @ToolScan.started -= instance.OnToolScan;
+            @ToolScan.performed -= instance.OnToolScan;
+            @ToolScan.canceled -= instance.OnToolScan;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+            @Target.started -= instance.OnTarget;
+            @Target.performed -= instance.OnTarget;
+            @Target.canceled -= instance.OnTarget;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -271,6 +474,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnDash(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
+        void OnTool1(InputAction.CallbackContext context);
+        void OnTool2(InputAction.CallbackContext context);
+        void OnTool3(InputAction.CallbackContext context);
+        void OnTool4(InputAction.CallbackContext context);
+        void OnToolScan(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+        void OnTarget(InputAction.CallbackContext context);
     }
 }

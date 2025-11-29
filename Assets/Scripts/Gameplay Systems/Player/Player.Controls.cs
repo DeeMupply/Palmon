@@ -1,0 +1,159 @@
+using UnityEngine;
+using System;
+using UnityEngine.InputSystem;
+
+public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
+{
+    [Header("Movement")]
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float sprintSpeed = 8f;
+    [SerializeField] private float jumpForce = 8f;
+
+    [Header("Jump & Ground Check")]
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundDistance = 0.4f;
+    [SerializeField] private LayerMask groundMask = 1;
+    [SerializeField] private int maxJumps = 2;
+    [SerializeField] private int jumpCount = 0;
+
+    [SerializeField] private Transform cameraTransform; // Assign your Cinemachine camera's transform in Inspector
+
+    // Components
+    [SerializeField] private CharacterController characterController;
+    [SerializeField] private PlayerInputActions playerInputActions;
+
+    // Movement variables
+    private Vector3 velocity;
+    private Vector2 moveInput;
+    private bool isGrounded;
+
+    private Transform targetingPalmon;
+
+    #region Update Methods
+
+    private void HandleMovementWithSprinting()
+    {
+        // Ground check
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        if (isGrounded)
+        {
+            jumpCount = 0; // Reset jump count when grounded
+        }
+
+        if (isGrounded && velocity.y < 0)
+            velocity.y = -2f;
+
+        // Camera-relative movement direction
+        Vector3 camForward = cameraTransform.forward;
+        Vector3 camRight = cameraTransform.right;
+        camForward.y = 0;
+        camRight.y = 0;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        Vector3 moveDir = camRight * moveInput.x + camForward * moveInput.y;
+
+        // Instantly rotate character to movement direction if moving
+        if (moveInput.sqrMagnitude > 0.01f && moveDir != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(moveDir);
+        }
+
+        float currentSpeed = (isSprinting && stamina > 0) ? sprintSpeed : moveSpeed;
+        characterController.Move(currentSpeed * Time.deltaTime * moveDir);
+
+        // Gravity
+        velocity.y += Physics.gravity.y * Time.deltaTime;
+        characterController.Move(velocity * Time.deltaTime);
+    }
+
+    #endregion
+
+    #region Input Callbacks
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        moveInput = context.ReadValue<Vector2>();
+        OnPlayerMoved?.Invoke();
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.performed && jumpCount < maxJumps - 1)
+        {
+            velocity.y = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);
+            jumpCount++;
+            Debug.Log("Player jumped!");
+        }
+    }
+
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            if (stamina > 0)
+                isSprinting = true;
+        }
+        else if (context.canceled)
+        {
+            isSprinting = false;
+        }
+    }
+
+    public void OnTool1(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("Tool 1 activated.");
+            currentToolID = tools[1].ID;
+        }
+    }
+
+    public void OnTool2(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("Tool 2 activated.");
+            currentToolID = tools[2].ID;
+        }
+    }
+
+    public void OnTool3(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("Tool 3 activated.");
+            currentToolID = tools[3].ID;
+        }
+    }
+
+    public void OnTool4(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("Tool 4 activated.");
+            currentToolID = tools[4].ID;
+        }
+    }
+
+    public void OnToolScan(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("Tool Scan activated.");
+            currentToolID = tools[0].ID; // Switch to first tool. It's the scan tool.
+        }
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        toolDictionary[currentToolID].UseTool();
+    }
+
+    public void OnTarget(InputAction.CallbackContext context)
+    {
+        Debug.LogWarning("Targeting system not implemented yet.");
+    }
+
+    #endregion
+}

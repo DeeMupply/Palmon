@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
+public partial class Player
 {
     // Battle-related properties and methods can be added here in the future
     [Header("Circle Formation")]

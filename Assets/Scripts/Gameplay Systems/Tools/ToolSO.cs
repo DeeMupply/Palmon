@@ -3,19 +3,31 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Tool", menuName = "Gameplay/Tool")]
 public class ToolSO : ScriptableObject
 {
-    public ToolType toolType;
-    public string ID;
-    public string toolName;
-    public Sprite toolIcon;
-    public int baseMaxUses;
-    public int useIncrementPerLevel;
-    public int adnPerLevel;
-    public int maxLevel;
-    public float cooldownTime;
+    [Header("General Info")]
+    [SerializeField] private ToolType toolType;
+    [SerializeField] private string toolName;
+    [SerializeField] private Sprite toolIcon;
+
+    [Header("Gameplay Stats")]
+    [SerializeField] private int baseMaxUses;
+    [SerializeField] private int useIncrementPerLevel;
+    [SerializeField] private int adnPerLevel;
+    [SerializeField] private int maxLevel;
+    [SerializeField] private float cooldownTime;
+
+    public ToolType ToolType => toolType;
+    public string ToolName => toolName;
+    public Sprite ToolIcon => toolIcon;
+    public int BaseMaxUses => baseMaxUses;
+    public int UseIncrementPerLevel => useIncrementPerLevel;
+    public int AdnPerLevel => adnPerLevel;
+    public int MaxLevel => maxLevel;
+    public float CooldownTime => cooldownTime;
+    
+    public string ID => ToolType.ToString();
 
     private void OnValidate()
     {
-        ID = toolType.ToString();
         toolName = name;
     }
 

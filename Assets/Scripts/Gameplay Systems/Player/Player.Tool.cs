@@ -1,13 +1,15 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
+public partial class Player
 {
     // Tool-related properties and methods can be added here in the future
+    private int currentADN;
     [SerializeField] private List<ToolSO> tools;
 
-    private Dictionary<string, Tool> toolDictionary = new Dictionary<string, Tool>();
+    public Dictionary<string, Tool> ToolDictionary {get; private set;}= new Dictionary<string, Tool>();
+
+    public event System.Action OnCurrentToolChanged;
 
     // Internal fields
     private string currentToolID;
@@ -17,7 +19,7 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
         foreach (var toolSO in tools)
         {
             Tool tool = new Tool(toolSO, () => {
-                switch (toolSO.toolType)
+                switch (toolSO.ToolType)
                 {
                     case ToolType.Scan:
                         UseToolScan();
@@ -36,9 +38,25 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
                         break;
                 }
             });
-            toolDictionary.Add(toolSO.ID, tool);
+            ToolDictionary.Add(toolSO.ID, tool);
         }
         currentToolID = tools[0].ID; // Set default tool
+    }
+
+    private void UpdateToolCooldowns()
+    {
+        foreach (var tool in ToolDictionary.Values)
+        {
+            if (tool.CurrentCooldown > 0)
+            {
+                tool.CurrentCooldown -= Time.deltaTime;
+                if (tool.CurrentCooldown < 0)
+                {
+                    tool.CurrentCooldown = 0;
+                }
+                tool.OnToolCooldownUpdated?.Invoke();
+            }
+        }
     }
 
     private void UseToolScan()
@@ -65,6 +83,67 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
     {
         // Implement detect tool usage logic here
     }
+
+    public Tool GetCurrentTool()
+    {
+        return GetToolByID(currentToolID);
+    }
+
+    public Tool GetToolByID(string toolID)
+    {
+        if (ToolDictionary.TryGetValue(toolID, out Tool tool))
+        {
+            return tool;
+        }
+        Debug.LogWarning($"Tool with ID {toolID} not found.");
+        return null;
+    }
+
+    public ToolSaveData GetToolSaveData()
+    {
+        ToolSaveData saveData = new ToolSaveData();
+        saveData.CurrentADN = currentADN;
+        saveData.ToolEntries = new List<ToolSaveDataEntry>();
+
+        foreach (var tool in ToolDictionary.Values)
+        {
+            ToolSaveDataEntry entry = new ToolSaveDataEntry
+            {
+                ToolID = tool.ToolData.ID,
+                CurrentLevel = tool.CurrentLevel
+            };
+            saveData.ToolEntries.Add(entry);
+        }
+
+        return saveData;
+    }
+
+    public void LoadToolData(ToolSaveData saveData)
+    {
+        currentADN = saveData.CurrentADN;
+
+        foreach (var entry in saveData.ToolEntries)
+        {
+            Tool tool = GetToolByID(entry.ToolID);
+            if (tool != null)
+            {
+                tool.CurrentLevel = entry.CurrentLevel;
+                tool.ResetUses();
+            }
+        }
+    }
+}
+
+public class ToolSaveData
+{
+    public int CurrentADN;
+    public List<ToolSaveDataEntry> ToolEntries;
+}
+
+public class ToolSaveDataEntry
+{
+    public string ToolID;
+    public int CurrentLevel;
 }
 
 public class Tool
@@ -72,45 +151,56 @@ public class Tool
     public ToolSO ToolData;
     public int CurrentLevel = 1;
     public int CurrentMaxUses => ToolData.GetMaxUsesAtLevel(CurrentLevel);
-    public int CurrentUses;
+    public int CurrentLeftUses;
     public float CurrentCooldown;
+    public bool IsOnCooldown => CurrentCooldown > 0;
 
     public System.Action OnToolUsed;
+    public System.Action OnToolLeveledUp;
+    public System.Action OnToolCooldownUpdated;
 
-    public Tool(ToolSO toolSO, System.Action onToolUsed = null)
+    public Tool(ToolSO toolSO, System.Action onToolUsed)
     {
         ToolData = toolSO;
         OnToolUsed = onToolUsed;
+        CurrentLeftUses = CurrentMaxUses;
+        CurrentCooldown = toolSO.CooldownTime;
+    }
+
+    public void ResetUses()
+    {
+        CurrentLeftUses = CurrentMaxUses;
     }
 
     public void UseTool()
     {
-        if (CurrentUses < CurrentMaxUses)
+        if (CurrentLeftUses > 0)
         {
-            CurrentUses++;
+            CurrentLeftUses--;
             OnToolUsed?.Invoke();
         }
         else
         {
-            Debug.LogWarning($"Tool {ToolData.toolName} has reached its maximum uses.");
+            Debug.LogWarning($"Tool {ToolData.ToolName} has reached its maximum uses.");
         }
     }
 
     public void LevelUp()
     {
-        if (CurrentLevel < ToolData.maxLevel)
+        if (CurrentLevel < ToolData.MaxLevel)
         {
             CurrentLevel++;
+            ResetUses();
             // Implement additional level-up logic here
         }
         else
         {
-            Debug.LogWarning($"Tool {ToolData.toolName} is already at maximum level.");
+            Debug.LogWarning($"Tool {ToolData.ToolName} is already at maximum level.");
         }
     }
 
     public int GetADNRequirement()
     {
-        return ToolData.adnPerLevel * CurrentLevel;
+        return ToolData.AdnPerLevel * CurrentLevel;
     }
 }

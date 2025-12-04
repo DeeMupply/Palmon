@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
 
-public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
+public partial class Player
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
@@ -59,7 +59,7 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
             transform.rotation = Quaternion.LookRotation(moveDir);
         }
 
-        float currentSpeed = (isSprinting && stamina > 0) ? sprintSpeed : moveSpeed;
+        float currentSpeed = (isSprinting && currentStamina > 0) ? sprintSpeed : moveSpeed;
         characterController.Move(currentSpeed * Time.deltaTime * moveDir);
 
         // Gravity
@@ -74,6 +74,7 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+        isMoving = moveInput.sqrMagnitude > 0.01f;
         OnPlayerMoved?.Invoke();
     }
 
@@ -84,6 +85,7 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
             velocity.y = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);
             jumpCount++;
             Debug.Log("Player jumped!");
+            isJumping = true;
         }
     }
 
@@ -91,7 +93,7 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
     {
         if (context.started)
         {
-            if (stamina > 0)
+            if (currentStamina > 0)
                 isSprinting = true;
         }
         else if (context.canceled)
@@ -106,6 +108,7 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
         {
             Debug.Log("Tool 1 activated.");
             currentToolID = tools[1].ID;
+            OnCurrentToolChanged?.Invoke();
         }
     }
 
@@ -115,6 +118,7 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
         {
             Debug.Log("Tool 2 activated.");
             currentToolID = tools[2].ID;
+            OnCurrentToolChanged?.Invoke();
         }
     }
 
@@ -124,6 +128,7 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
         {
             Debug.Log("Tool 3 activated.");
             currentToolID = tools[3].ID;
+            OnCurrentToolChanged?.Invoke();
         }
     }
 
@@ -133,6 +138,7 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
         {
             Debug.Log("Tool 4 activated.");
             currentToolID = tools[4].ID;
+            OnCurrentToolChanged?.Invoke();
         }
     }
 
@@ -142,12 +148,24 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
         {
             Debug.Log("Tool Scan activated.");
             currentToolID = tools[0].ID; // Switch to first tool. It's the scan tool.
+            OnCurrentToolChanged?.Invoke();
         }
     }
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        toolDictionary[currentToolID].UseTool();
+        if (context.performed)
+        {
+            ToolDictionary[currentToolID].UseTool();
+            if (currentToolID == tools[0].ID)
+            {
+                isUsingScanTool = true;
+            }
+            else
+            {
+                isUsingTool = true;
+            }
+        }
     }
 
     public void OnTarget(InputAction.CallbackContext context)

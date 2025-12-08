@@ -40,7 +40,12 @@ public partial class Player
             });
             ToolDictionary.Add(toolSO.ID, tool);
         }
+    }
+
+    private void InitializeCurrentTool()
+    {
         currentToolID = tools[0].ID; // Set default tool
+        OnCurrentToolChanged?.Invoke();
     }
 
     private void UpdateToolCooldowns()
@@ -164,7 +169,7 @@ public class Tool
         ToolData = toolSO;
         OnToolUsed = onToolUsed;
         CurrentLeftUses = CurrentMaxUses;
-        CurrentCooldown = toolSO.CooldownTime;
+        CurrentCooldown = 0f;
     }
 
     public void ResetUses()
@@ -174,9 +179,22 @@ public class Tool
 
     public void UseTool()
     {
+        if (ToolData.ToolType == ToolType.Scan)
+        {
+            OnToolUsed?.Invoke();
+            return;
+        }
+
+        if (IsOnCooldown)
+        {
+            Debug.LogWarning($"Tool {ToolData.ToolName} is on cooldown for {CurrentCooldown:F1} more seconds.");
+            return;
+        }
+
         if (CurrentLeftUses > 0)
         {
             CurrentLeftUses--;
+            CurrentCooldown = ToolData.CooldownTime;
             OnToolUsed?.Invoke();
         }
         else

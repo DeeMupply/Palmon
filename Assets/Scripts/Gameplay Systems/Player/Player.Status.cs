@@ -19,6 +19,8 @@ public partial class Player
     {
         currentHealth = maxHealth;
         currentStamina = maxStamina;
+        OnHealthChanged?.Invoke(currentHealth);
+        OnStaminaChanged?.Invoke(currentStamina);
     }
 
     private void HandleStamina()
@@ -64,8 +66,19 @@ public partial class Player
         return maxHealth;
     }
 
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
     public float GetMaxStamina()
     {
         return maxStamina;
+    }
+
+    [ContextMenu("Remove 10% Health")]
+    private void RemoveTenPercentHealth()
+    {
+        TakeDamage(maxHealth * 0.1f);
     }
 }

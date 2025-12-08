@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 535ff9f2c353a9a40891f9b847538a76, type: 3}
+  m_Name: Scan
+  m_EditorClassIdentifier: 
+  toolType: 0
+  toolName: Scan
+  toolIcon: {fileID: 21300000, guid: 7173b7b989c6da34abff39baf49a3887, type: 3}
+  baseMaxUses: 10
+  useIncrementPerLevel: 0
+  adnPerLevel: 0
+  maxLevel: 1
+  cooldownTime: 0

@@ -1,9 +1,12 @@
 using UnityEngine;
 using System;
 using UnityEngine.InputSystem;
+using Unity.Cinemachine;
 
 public partial class Player
 {
+    [SerializeField] private CinemachineInputAxisController cameraAxisController;
+
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float sprintSpeed = 8f;
@@ -26,6 +29,8 @@ public partial class Player
     private Vector3 velocity;
     private Vector2 moveInput;
     private bool isGrounded;
+    private bool isControllingCursor = false;
+    private bool isControllingPlayer = true;
 
     private Transform targetingPalmon;
 
@@ -73,6 +78,7 @@ public partial class Player
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (!isControllingPlayer) return;
         moveInput = context.ReadValue<Vector2>();
         isMoving = moveInput.sqrMagnitude > 0.01f;
         OnPlayerMoved?.Invoke();
@@ -80,6 +86,7 @@ public partial class Player
 
     public void OnJump(InputAction.CallbackContext context)
     {
+        if (!isControllingPlayer) return;
         if (context.performed && jumpCount < maxJumps - 1)
         {
             velocity.y = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);
@@ -91,6 +98,7 @@ public partial class Player
 
     public void OnSprint(InputAction.CallbackContext context)
     {
+        if (!isControllingPlayer) return;
         if (context.started)
         {
             if (currentStamina > 0)
@@ -104,6 +112,7 @@ public partial class Player
 
     public void OnTool1(InputAction.CallbackContext context)
     {
+        if (!isControllingPlayer) return;
         if (context.performed)
         {
             Debug.Log("Tool 1 activated.");
@@ -114,6 +123,7 @@ public partial class Player
 
     public void OnTool2(InputAction.CallbackContext context)
     {
+        if (!isControllingPlayer) return;
         if (context.performed)
         {
             Debug.Log("Tool 2 activated.");
@@ -124,6 +134,7 @@ public partial class Player
 
     public void OnTool3(InputAction.CallbackContext context)
     {
+        if (!isControllingPlayer) return;
         if (context.performed)
         {
             Debug.Log("Tool 3 activated.");
@@ -134,6 +145,7 @@ public partial class Player
 
     public void OnTool4(InputAction.CallbackContext context)
     {
+        if (!isControllingPlayer) return;
         if (context.performed)
         {
             Debug.Log("Tool 4 activated.");
@@ -144,6 +156,7 @@ public partial class Player
 
     public void OnToolScan(InputAction.CallbackContext context)
     {
+        if (!isControllingPlayer) return;
         if (context.performed)
         {
             Debug.Log("Tool Scan activated.");
@@ -154,8 +167,11 @@ public partial class Player
 
     public void OnInteract(InputAction.CallbackContext context)
     {
+        if (!isControllingPlayer) return;
+        if (isControllingCursor) return;
         if (context.performed)
         {
+            Debug.Log($"Using current tool: {currentToolID}");
             ToolDictionary[currentToolID].UseTool();
             if (currentToolID == tools[0].ID)
             {
@@ -170,8 +186,62 @@ public partial class Player
 
     public void OnTarget(InputAction.CallbackContext context)
     {
+        if (!isControllingPlayer) return;
         Debug.LogWarning("Targeting system not implemented yet.");
     }
+
+    public void OnCursorToggle(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            CursorToggleOn();
+        }
+        else if (context.canceled)
+        {
+            CursorToggleOff();
+        }
+    }
+
+    public void OnEscapePress(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            isControllingPlayer = false;
+            CursorToggleOn();
+            CanvasMainGame.Instance.ShowPausedMenu();
+        }
+    }
+
+    public void OnResumeFromPause()
+    {
+        isControllingPlayer = true;
+        CursorToggleOff();
+    }
+
+    private void CursorToggleOn()
+    {
+        isControllingCursor = true;
+        cameraAxisController.enabled = false;
+        CursorController.Instance.ShowCursor();
+    }
+
+    public void CursorToggleOff()
+    {
+        isControllingCursor = false;
+        cameraAxisController.enabled = true;
+        CursorController.Instance.HideCursor();
+    }
+
+    /*
+    private void PauseCameraRotation()
+    {
+        cameraAxisController.enabled = false;
+    }
+    private void ResumeCameraRotation()
+    {
+        cameraAxisController.enabled = true;
+    }
+    */
 
     #endregion
 }

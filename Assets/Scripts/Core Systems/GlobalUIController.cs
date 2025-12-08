@@ -201,7 +201,7 @@ public class UIFadeHelper : MonoBehaviour
         
         while (elapsed < fadeTime)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime; // Use unscaledDeltaTime instead of deltaTime
             float progress = elapsed / fadeTime;
             
             canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, progress);

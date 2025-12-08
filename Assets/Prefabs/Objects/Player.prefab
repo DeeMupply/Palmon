@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8988666712851386626}
   - component: {fileID: 1269098580734168138}
-  - component: {fileID: 4123596421912971526}
+  - component: {fileID: 5788372383645681122}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -61,7 +61,7 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.7, z: 0}
---- !u!114 &4123596421912971526
+--- !u!114 &5788372383645681122
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,14 +70,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2038523745009264882}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6c9baab88812364e84950db53bafc5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 47ea3730529c57344aa4af85aea201db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 525548774981124772}
+  playerASM: {fileID: 11400000, guid: ec4a8b2448d04e04d9503d49ab189f1b, type: 2}
   circleRadius: 3
+  chasingEnemyCount: 0
   moveSpeed: 5
+  sprintSpeed: 8
   jumpForce: 8
-  dashForce: 15
-  dashCooldown: 1
   groundCheck: {fileID: 3792698709437573211}
   groundDistance: 0.4
   groundMask:
@@ -85,10 +87,20 @@ MonoBehaviour:
     m_Bits: 64
   maxJumps: 2
   jumpCount: 0
-  dashDuration: 0.2
   cameraTransform: {fileID: 0}
   characterController: {fileID: 1269098580734168138}
-  chasingEnemyCount: 0
+  maxHealth: 100
+  currentHealth: 0
+  maxStamina: 100
+  currentStamina: 0
+  staminaRegenRate: 5
+  sprintStaminaCost: 10
+  tools:
+  - {fileID: 11400000, guid: c62e9da23b5ba514985bdc358341568f, type: 2}
+  - {fileID: 11400000, guid: d8e3eaf98b12cc64ba987398421f119c, type: 2}
+  - {fileID: 11400000, guid: 70971eef863ae76449087705541c37c8, type: 2}
+  - {fileID: 11400000, guid: 93cf79e67da47fd44b1eaff7e87ff67d, type: 2}
+  - {fileID: 11400000, guid: a61c5907fdb969d47a797f8dcd4e0292, type: 2}
 --- !u!1 &4463441475620211597
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,5 +223,10 @@ PrefabInstance:
 --- !u!4 &54507939665967102 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7019920669011962644, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
+  m_PrefabInstance: {fileID: 7037545160373902570}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &525548774981124772 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7413344840680693326, guid: cc91c8ba8b9a34f4d99e70d721f60b64, type: 3}
   m_PrefabInstance: {fileID: 7037545160373902570}
   m_PrefabAsset: {fileID: 0}

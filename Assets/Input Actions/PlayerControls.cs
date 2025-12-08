@@ -116,6 +116,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CursorToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""731bdafd-6b5d-4bf9-bf39-6d32bc18a58f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EscapePress"",
+                    ""type"": ""Button"",
+                    ""id"": ""b22bda75-04b5-4ae0-9954-1bd9c338da86"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -272,6 +290,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""ToolScan"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ebf60674-1e6f-4010-8f07-bcbb1df1a235"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CursorToggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7b5dc124-ee52-43e7-861d-6ac9963bd4f2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EscapePress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -290,6 +330,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_ToolScan = m_Player.FindAction("ToolScan", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Target = m_Player.FindAction("Target", throwIfNotFound: true);
+        m_Player_CursorToggle = m_Player.FindAction("CursorToggle", throwIfNotFound: true);
+        m_Player_EscapePress = m_Player.FindAction("EscapePress", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -366,6 +408,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ToolScan;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Target;
+    private readonly InputAction m_Player_CursorToggle;
+    private readonly InputAction m_Player_EscapePress;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -380,6 +424,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @ToolScan => m_Wrapper.m_Player_ToolScan;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Target => m_Wrapper.m_Player_Target;
+        public InputAction @CursorToggle => m_Wrapper.m_Player_CursorToggle;
+        public InputAction @EscapePress => m_Wrapper.m_Player_EscapePress;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -419,6 +465,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Target.started += instance.OnTarget;
             @Target.performed += instance.OnTarget;
             @Target.canceled += instance.OnTarget;
+            @CursorToggle.started += instance.OnCursorToggle;
+            @CursorToggle.performed += instance.OnCursorToggle;
+            @CursorToggle.canceled += instance.OnCursorToggle;
+            @EscapePress.started += instance.OnEscapePress;
+            @EscapePress.performed += instance.OnEscapePress;
+            @EscapePress.canceled += instance.OnEscapePress;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -453,6 +505,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Target.started -= instance.OnTarget;
             @Target.performed -= instance.OnTarget;
             @Target.canceled -= instance.OnTarget;
+            @CursorToggle.started -= instance.OnCursorToggle;
+            @CursorToggle.performed -= instance.OnCursorToggle;
+            @CursorToggle.canceled -= instance.OnCursorToggle;
+            @EscapePress.started -= instance.OnEscapePress;
+            @EscapePress.performed -= instance.OnEscapePress;
+            @EscapePress.canceled -= instance.OnEscapePress;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -482,5 +540,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnToolScan(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnTarget(InputAction.CallbackContext context);
+        void OnCursorToggle(InputAction.CallbackContext context);
+        void OnEscapePress(InputAction.CallbackContext context);
     }
 }

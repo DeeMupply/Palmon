@@ -4,7 +4,12 @@ using UnityEngine.SceneManagement;
 public class GroupMainButtons : MonoBehaviour
 {
     [SerializeField] private CanvasGroup mainButtonsGroup;
-    [SerializeField] private CanvasGroup settingsGroup;
+
+    public void ShowGroupMainButtons()
+    {
+        GlobalUIController.ShowGroup(mainButtonsGroup, 0.3f);
+    }
+
     public void OnStartButtonClicked()
     {
         SceneManager.LoadScene(SceneNameManager.SCENE_GAMEPLAY);
@@ -13,7 +18,7 @@ public class GroupMainButtons : MonoBehaviour
     public void OnSettingsButtonClicked()
     {
         GlobalUIController.HideGroup(mainButtonsGroup, 0.3f);
-        GlobalUIController.ShowGroup(settingsGroup, 0.3f);
+        CanvasAllScenes.Instance.ShowSettingsGroup(ShowGroupMainButtons);
     }
 
     public void OnQuitButtonClicked()

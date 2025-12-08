@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
 {
@@ -12,7 +13,7 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
             playerInputActions = new PlayerInputActions();
             playerInputActions.Player.SetCallbacks(this);
             playerInputActions.Player.Enable();
-            DontDestroyOnLoad(gameObject);
+            InitializeTools();
         }
         else
         {
@@ -34,7 +35,7 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
             Debug.LogWarning("GroundCheck transform was not assigned. Created a new one.");
         }
         InitializeStatus();
-        InitializeTools();
+        InitializeCurrentTool();
     }
 
     private void OnDestroy()

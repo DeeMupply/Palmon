@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a903132f3e318024d8aeaf208189519a, type: 3}
+  m_Name: PalmonASM
+  m_EditorClassIdentifier: 
+  objectTypeName: Palmon
+  animationStateMaps:
+  - clip: {fileID: 7400000, guid: 6f4b1530b90326244a762d609b221ac2, type: 2}
+    key: Attack
+    value: Armature_Attack
+    isIncludedInUsage: 1
+  - clip: {fileID: 7400000, guid: f7cee1d74becd1f4a96332465ce70a05, type: 2}
+    key: Run
+    value: Armature_Crouch
+    isIncludedInUsage: 1
+  - clip: {fileID: 7400000, guid: 5d7fc710d428ba043adf6780142c4bac, type: 2}
+    key: Eat
+    value: Armature_Eat
+    isIncludedInUsage: 1
+  - clip: {fileID: 7400000, guid: 4de2edd29bc3c6f45b28085aa2ff8f71, type: 2}
+    key: Idle
+    value: Armature_Idle
+    isIncludedInUsage: 1
+  PathToSaveGeneratedClass: Assets/Scripts/Gameplay Systems/Palmon/

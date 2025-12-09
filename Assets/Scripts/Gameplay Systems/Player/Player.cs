@@ -69,6 +69,11 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
         }
     }
 
+    public Transform GetTransform()
+    {
+        return transform;
+    }
+
     public PlayerSaveData GetPlayerSaveData()
     {
         return new PlayerSaveData(currentHealth, currentStamina, currentToolID, transform.position);

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b1891d2828f6c41a0c11c0e187618c, type: 3}
   m_Name: Aqua Duck
   m_EditorClassIdentifier: 
-  scannableName: Flower Mantis
+  scannableName: Aqua Duck
   scannableDescription: 
-  scannableIcon: {fileID: 21300000, guid: eced36b079fbfb947b1b8f8b05bb3be0, type: 3}
+  scannableIcon: {fileID: 21300000, guid: f78b30f32ad57654ca8bdc1ff5be513c, type: 3}
   scansRequired: 20
   scanTime: 2
   adnPerScan: 20

@@ -31,12 +31,18 @@ public class GroupToolUpgrade : MonoBehaviour
     public void ShowWithEffect(System.Action onCloseComplete = null)
     {
         this.onCloseComplete = onCloseComplete;
-        GlobalUIController.ShowGroup(upgradeGroup, 0.3f);
+        GlobalUIController.ShowGroup(upgradeGroup);
     }
 
     public void OnExitButtonClicked()
     {
-        GlobalUIController.HideGroup(upgradeGroup, 0.3f);
+        GlobalUIController.HideGroup(upgradeGroup);
         onCloseComplete?.Invoke();
+    }
+
+    public void OnSwitchTabButtonPressed()
+    {
+        GlobalUIController.HideGroup(upgradeGroup);
+        CanvasMainGame.Instance.ShowSpeciesMenu();
     }
 }

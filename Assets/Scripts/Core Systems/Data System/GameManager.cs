@@ -65,8 +65,9 @@ public class GameManager : MonoBehaviour
         else
         {
             var newPlayerData = new PlayerSaveData(100, 100, firstPlayPosition, firstPlayRotation);
+            var newToolData = new ToolSaveData(startingTool.ID, 0);
             // Create new game data
-            activeGameData = new GameData(newPlayerData);
+            activeGameData = new GameData(newPlayerData, newToolData);
             Debug.Log("No save file found. Created new game data.");
             // Initialize other systems as needed
         }

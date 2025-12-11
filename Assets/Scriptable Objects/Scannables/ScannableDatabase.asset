@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d133b3de11fd2ac49a69d379337bf9b0, type: 3}
+  m_Name: ScannableDatabase
+  m_EditorClassIdentifier: 
+  allScannables:
+  - {fileID: 11400000, guid: d793138daded336438331edb36d9a229, type: 2}
+  - {fileID: 11400000, guid: cc028902817e0b54da14d4d6337a4063, type: 2}
+  - {fileID: 11400000, guid: d9f0381dd189972419166d50f2718c7c, type: 2}
+  - {fileID: 11400000, guid: 3634f4c59bdef6641a729f9139e4c9a3, type: 2}
+  - {fileID: 11400000, guid: 6f56fc74b070c2746802923f881e4738, type: 2}
+  - {fileID: 11400000, guid: d1f8ef71a0f7eb34d86e7742d437ff94, type: 2}
+  - {fileID: 11400000, guid: e2926ef9ed86c7648b05fb789282e52e, type: 2}

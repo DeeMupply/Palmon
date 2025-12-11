@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toolType: 4
   toolName: Detect
-  toolIcon: {fileID: 21300000, guid: 57ac2d2f65205b3499b05ea30dc01d6f, type: 3}
+  toolIcon: {fileID: 21300000, guid: 5ce26188668ce574d94f8f1bef34803e, type: 3}
   baseMaxUses: 5
   useIncrementPerLevel: 5
   adnPerLevel: 40

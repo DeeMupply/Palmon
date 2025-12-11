@@ -129,10 +129,7 @@ public partial class Player
 
     public ToolSaveData GetToolSaveData()
     {
-        ToolSaveData saveData = new ToolSaveData();
-        saveData.CurrentADN = currentADN;
-        saveData.CurrentToolID = currentToolID;
-        saveData.ToolEntries = new List<ToolSaveDataEntry>();
+        ToolSaveData saveData = new ToolSaveData(currentToolID, currentADN);
 
         foreach (var tool in ToolDictionary.Values)
         {
@@ -207,6 +204,16 @@ public class ToolSaveData
     public int CurrentADN;
     public string CurrentToolID;
     public List<ToolSaveDataEntry> ToolEntries;
+    public ToolSaveData()
+    {
+        ToolEntries = new List<ToolSaveDataEntry>();
+    }
+    public ToolSaveData(string currentToolID, int currentADN)
+    {
+        CurrentToolID = currentToolID;
+        CurrentADN = currentADN;
+        ToolEntries = new List<ToolSaveDataEntry>();
+    }
 }
 
 [System.Serializable]

@@ -242,6 +242,11 @@ public partial class Player
         if (isControllingCursor) return;
         if (!isGrounded) return; // Prevent using tools mid-air
         if (isUsingTool) return; // Prevent spamming tool use
+        if (isAtDock)
+        {
+            ReplenishAndSubmitScans();
+            return;
+        }
         if (ToolDictionary[currentToolID].IsOnCooldown)
         {
             Debug.Log("Tool is on cooldown.");
@@ -251,7 +256,16 @@ public partial class Player
         {
             Debug.Log($"Using current tool: {currentToolID}");
             isUsingTool = true;
+            StopPlayerMovement();
         }
+    }
+
+    private void StopPlayerMovement()
+    {
+        moveInput = Vector2.zero;
+        velocity = Vector3.zero;
+        isMoving = false;
+        OnPlayerMoved?.Invoke();
     }
 
     public void OnTarget(InputAction.CallbackContext context)
@@ -276,6 +290,7 @@ public partial class Player
     {
         if (context.performed)
         {
+            CanvasMainGame.Instance.HideAllMenusExceptDeathPopupAndPaused();
             TogglePauseState();
             CanvasMainGame.Instance.TogglePausedMenu();
         }

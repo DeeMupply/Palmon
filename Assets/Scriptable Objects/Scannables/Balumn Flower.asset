@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8b1891d2828f6c41a0c11c0e187618c, type: 3}
-  m_Name: Polumn Flower
+  m_Name: Balumn Flower
   m_EditorClassIdentifier: 
   scannableName: Polumn Flower
   scannableDescription: 
-  scannableIcon: {fileID: 21300000, guid: eced36b079fbfb947b1b8f8b05bb3be0, type: 3}
+  scannableIcon: {fileID: 21300000, guid: 2ad7c63f8f1b19349a7139958429c297, type: 3}
   scansRequired: 20
   scanTime: 2
   adnPerScan: 15

@@ -7,6 +7,15 @@ public partial class Player
     [SerializeField] private float healthRegenAmount = 20f;
     
     public System.Action<string> OnScanSuccess;
+
+    private bool isAtDock = false;
+
+    public bool SetIsAtDock(bool atDock)
+    {
+        isAtDock = atDock;
+        return isAtDock;
+    }
+    
     private void UseToolScan()
     {
         scanHitBox.SetActive(true);

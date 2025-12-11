@@ -6,6 +6,7 @@ public class CanvasMainGame : MonoBehaviour
     public static CanvasMainGame Instance { get; private set; }
     [SerializeField] GroupPaused groupPaused;
     [SerializeField] GroupToolUpgrade groupToolsUpgrade;
+    [SerializeField] CanvasGroup groupToolsUpgradeCanvas;
     [SerializeField] CanvasGroup groupSpecies;
     [SerializeField] GroupDeathPopup groupDeathPopup;
 
@@ -29,6 +30,12 @@ public class CanvasMainGame : MonoBehaviour
     private void HideAllMenus()
     {
         groupPaused.HideOnStart();
+        groupToolsUpgrade.HideOnStart();
+        GlobalUIController.HideGroup(groupSpecies);
+    }
+
+    public void HideAllMenusExceptDeathPopupAndPaused()
+    {
         groupToolsUpgrade.HideOnStart();
         GlobalUIController.HideGroup(groupSpecies);
     }
@@ -64,7 +71,7 @@ public class CanvasMainGame : MonoBehaviour
     [ContextMenu("Toggle Tools Upgrade Menu")]
     private void ToggleToolsUpgradeMenu()
     {
-        groupToolsUpgrade.OnExitButtonClicked();
+        GlobalUIController.ToggleGroup(groupToolsUpgradeCanvas);
     }
 
     [ContextMenu("Toggle Species Menu")]

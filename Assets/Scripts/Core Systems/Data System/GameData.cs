@@ -27,9 +27,9 @@ public class GameData
         playerData = new PlayerSaveData();
     }
 
-    public GameData(PlayerSaveData playerData)
+    public GameData(PlayerSaveData playerData, ToolSaveData toolData)
     {
-        this.toolData = new ToolSaveData();
+        this.toolData = toolData;
         this.playerData = playerData;
     }
 

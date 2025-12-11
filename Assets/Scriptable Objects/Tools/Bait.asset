@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toolType: 1
   toolName: Bait
-  toolIcon: {fileID: 21300000, guid: eced36b079fbfb947b1b8f8b05bb3be0, type: 3}
+  toolIcon: {fileID: 21300000, guid: d2871fd4140b5c64ca6d26091a066434, type: 3}
   baseMaxUses: 5
   useIncrementPerLevel: 5
   adnPerLevel: 20

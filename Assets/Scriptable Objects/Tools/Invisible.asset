@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toolType: 3
   toolName: Invisible
-  toolIcon: {fileID: 21300000, guid: 6c40b4e1c12a71341b86c242ddf91e62, type: 3}
+  toolIcon: {fileID: 21300000, guid: 52773c36c2ea53c4a92d1bdd2869ecab, type: 3}
   baseMaxUses: 5
   useIncrementPerLevel: 5
   adnPerLevel: 40

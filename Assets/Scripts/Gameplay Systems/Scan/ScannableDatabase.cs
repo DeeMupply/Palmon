@@ -81,7 +81,7 @@ public class ScannableDatabase : ScriptableObject
     {
         if (Application.isPlaying) return;
         
-        PopulateScannablesList();
+        // PopulateScannablesList();
         GenerateDictionary();
     }
     

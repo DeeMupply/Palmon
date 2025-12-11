@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scannableName: Poly Plant
   scannableDescription: 
-  scannableIcon: {fileID: 21300000, guid: eced36b079fbfb947b1b8f8b05bb3be0, type: 3}
+  scannableIcon: {fileID: 21300000, guid: cb47147a0465f7c4ba420922088a61a5, type: 3}
   scansRequired: 50
   scanTime: 2
   adnPerScan: 5

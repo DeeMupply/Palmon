@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class PanelScanQuest : MonoBehaviour
 {
     [Header("UI Elements")]
+    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private TextMeshProUGUI totalAdnText;
     [SerializeField] private GameObject scanQuestEntryPrefab;
     [SerializeField] private ScannableDatabase scannableDatabase;
@@ -24,6 +25,7 @@ public class PanelScanQuest : MonoBehaviour
         if (Player.Instance != null)
         {
             Player.Instance.OnAdnChanged += UpdateTotalAdn;
+            Player.Instance.OnScansSubmitted += OnScansSubmitted;
         }
     }
 
@@ -32,6 +34,7 @@ public class PanelScanQuest : MonoBehaviour
         if (Player.Instance != null)
         {
             Player.Instance.OnAdnChanged -= UpdateTotalAdn;
+            Player.Instance.OnScansSubmitted -= OnScansSubmitted;
         }
     }
 
@@ -55,6 +58,9 @@ public class PanelScanQuest : MonoBehaviour
             return;
         }
 
+        // Set height of container based on number of scannables
+        SetHeightOfContainer(scannableDatabase.GetAllScannables().Count);
+
         // Clear any existing entries
         ClearExistingEntries();
 
@@ -71,6 +77,23 @@ public class PanelScanQuest : MonoBehaviour
         }
 
         Debug.Log($"Initialized {scanQuestEntries.Count} scan quest entries");
+    }
+
+    private void SetHeightOfContainer(int entryCount)
+    {
+        RectTransform containerRect = scanQuestEntryContainer.GetComponent<RectTransform>();
+        RectTransform entryRect = scanQuestEntryPrefab.GetComponent<RectTransform>();
+
+        if (containerRect != null && entryRect != null)
+        {
+            float entryHeight = entryRect.sizeDelta.y;
+            float totalHeight = entryHeight * entryCount;
+            containerRect.sizeDelta = new Vector2(containerRect.sizeDelta.x, totalHeight);
+        }
+        else
+        {
+            Debug.LogWarning("Could not set height of container: RectTransforms not found.");
+        }
     }
 
     private void CreateScanQuestEntry(ScannableSO scannable)
@@ -143,6 +166,32 @@ public class PanelScanQuest : MonoBehaviour
     public List<ScanQuestEntry> GetAllScanQuestEntries()
     {
         return new List<ScanQuestEntry>(scanQuestEntries);
+    }
+
+    public void ShowGroupScanQuest()
+    {
+        GlobalUIController.ShowGroup(canvasGroup);
+    }
+
+    public void HideGroupScanQuest()
+    {
+        GlobalUIController.HideGroup(canvasGroup);
+    }
+
+    public void OnScansSubmitted()
+    {
+        ShowGroupScanQuest();
+    }
+
+    public void OnSwitchTabButtonPressed()
+    {
+        HideGroupScanQuest();
+        CanvasMainGame.Instance.ShowToolsUpgradeMenu();
+    }
+
+    public void OnExitButtonClicked()
+    {
+        HideGroupScanQuest();
     }
 
     [ContextMenu("Force Refresh Entries")]

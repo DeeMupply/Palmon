@@ -17,7 +17,16 @@ public partial class Player
     [SerializeField] private float groundDistance = 0.4f;
     [SerializeField] private LayerMask groundMask = 1;
     [SerializeField] private int maxJumps = 2;
-    [SerializeField] private int jumpCount = 0;
+    [SerializeField] private float jumpBufferTime = 0.1f; // Buffer time for jump input
+
+    // Jump mechanics
+    private int jumpCount = 0;
+    private bool jumpInputPressed = false;
+    private float jumpInputTime = 0f;
+    private bool wasGroundedLastFrame;
+    private bool hasJumpedThisFrame = false;
+
+
 
     [SerializeField] private Transform cameraTransform; // Assign your Cinemachine camera's transform in Inspector
 
@@ -31,6 +40,7 @@ public partial class Player
     private bool isGrounded;
     private bool isControllingCursor = false;
     private bool isControllingPlayer = true;
+    public event Action OnScansSubmitted;
 
     private Transform targetingPalmon;
 
@@ -38,15 +48,31 @@ public partial class Player
 
     private void HandleMovementWithSprinting()
     {
+        // Store previous grounded state
+        wasGroundedLastFrame = isGrounded;
+
         // Ground check
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if (isGrounded)
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) && characterController.velocity.y <= 0.1f;
+
+        // Reset jump count when landing (not every frame on ground)
+        if (isGrounded && !wasGroundedLastFrame)
         {
-            jumpCount = 0; // Reset jump count when grounded
+            jumpCount = 0;
+            isJumping = false;
         }
 
-        if (isGrounded && velocity.y < 0)
-            velocity.y = -2f;
+        // Handle jump input with buffering
+        HandleJumpLogic();
+
+        // Apply gravity before movement
+        if (!isGrounded)
+        {
+            velocity.y += Physics.gravity.y * Time.deltaTime;
+        }
+        else if (velocity.y < 0)
+        {
+            velocity.y = -2f; // Small downward force to keep grounded
+        }
 
         // Camera-relative movement direction
         Vector3 camForward = cameraTransform.forward;
@@ -64,12 +90,54 @@ public partial class Player
             transform.rotation = Quaternion.LookRotation(moveDir);
         }
 
+        // Apply horizontal movement
         float currentSpeed = (isSprinting && currentStamina > 0) ? sprintSpeed : moveSpeed;
         characterController.Move(currentSpeed * Time.deltaTime * moveDir);
 
-        // Gravity
-        velocity.y += Physics.gravity.y * Time.deltaTime;
+        // Apply vertical movement
         characterController.Move(velocity * Time.deltaTime);
+
+        // Reset jump flag at end of frame
+        hasJumpedThisFrame = false;
+    }
+
+    private void HandleJumpLogic()
+    {
+        // Check if we have buffered jump input
+        bool hasJumpBuffer = jumpInputPressed && (Time.time - jumpInputTime) <= jumpBufferTime;
+
+        if (hasJumpBuffer && !hasJumpedThisFrame)
+        {
+            // Can jump if grounded (first jump) or haven't used all air jumps
+            bool canJump = isGrounded ? jumpCount < 1 : jumpCount < maxJumps;
+
+            if (canJump)
+            {
+                PerformJump();
+                jumpInputPressed = false; // Consume the jump input
+            }
+        }
+
+        // Clear old jump input
+        if (jumpInputPressed && (Time.time - jumpInputTime) > jumpBufferTime)
+        {
+            jumpInputPressed = false;
+        }
+    }
+
+    private void PerformJump()
+    {
+        // Apply jump velocity
+        velocity.y = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);
+
+        // Increment jump count
+        jumpCount++;
+
+        // Set flags
+        isJumping = true;
+        hasJumpedThisFrame = true;
+
+        Debug.Log($"Player jumped! Jump count: {jumpCount}");
     }
 
     #endregion
@@ -79,6 +147,7 @@ public partial class Player
     public void OnMove(InputAction.CallbackContext context)
     {
         if (!isControllingPlayer) return;
+        if (isUsingTool) return; // Prevent movement while using a tool
         moveInput = context.ReadValue<Vector2>();
         isMoving = moveInput.sqrMagnitude > 0.01f;
         OnPlayerMoved?.Invoke();
@@ -87,18 +156,20 @@ public partial class Player
     public void OnJump(InputAction.CallbackContext context)
     {
         if (!isControllingPlayer) return;
-        if (context.performed && jumpCount < maxJumps - 1)
+        if (!isGrounded && jumpCount >= maxJumps) return; // No jumps left
+        if (isUsingTool) return; // Prevent jumping while using a tool
+        if (context.performed)
         {
-            velocity.y = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);
-            jumpCount++;
-            Debug.Log("Player jumped!");
-            isJumping = true;
+            // Store jump input with timestamp for buffering
+            jumpInputPressed = true;
+            jumpInputTime = Time.time;
         }
     }
 
     public void OnSprint(InputAction.CallbackContext context)
     {
         if (!isControllingPlayer) return;
+        if (isUsingTool) return; // Prevent sprinting while using a tool
         if (context.started)
         {
             if (currentStamina > 0)
@@ -113,55 +184,55 @@ public partial class Player
     public void OnTool1(InputAction.CallbackContext context)
     {
         if (!isControllingPlayer) return;
+        if (isUsingTool) return; // Prevent switching tools while using one
         if (context.performed)
         {
             Debug.Log("Tool 1 activated.");
-            currentToolID = tools[1].ID;
-            OnCurrentToolChanged?.Invoke();
+            SwitchToTool(tools[1].ID);
         }
     }
 
     public void OnTool2(InputAction.CallbackContext context)
     {
         if (!isControllingPlayer) return;
+        if (isUsingTool) return; // Prevent switching tools while using one
         if (context.performed)
         {
             Debug.Log("Tool 2 activated.");
-            currentToolID = tools[2].ID;
-            OnCurrentToolChanged?.Invoke();
+            SwitchToTool(tools[2].ID);
         }
     }
 
     public void OnTool3(InputAction.CallbackContext context)
     {
         if (!isControllingPlayer) return;
+        if (isUsingTool) return; // Prevent switching tools while using one
         if (context.performed)
         {
             Debug.Log("Tool 3 activated.");
-            currentToolID = tools[3].ID;
-            OnCurrentToolChanged?.Invoke();
+            SwitchToTool(tools[3].ID);
         }
     }
 
     public void OnTool4(InputAction.CallbackContext context)
     {
         if (!isControllingPlayer) return;
+        if (isUsingTool) return; // Prevent switching tools while using one
         if (context.performed)
         {
             Debug.Log("Tool 4 activated.");
-            currentToolID = tools[4].ID;
-            OnCurrentToolChanged?.Invoke();
+            SwitchToTool(tools[4].ID);
         }
     }
 
     public void OnToolScan(InputAction.CallbackContext context)
     {
         if (!isControllingPlayer) return;
+        if (isUsingTool) return; // Prevent switching tools while using one
         if (context.performed)
         {
             Debug.Log("Tool Scan activated.");
-            currentToolID = tools[0].ID; // Switch to first tool. It's the scan tool.
-            OnCurrentToolChanged?.Invoke();
+            SwitchToTool(tools[0].ID);
         }
     }
 
@@ -169,18 +240,17 @@ public partial class Player
     {
         if (!isControllingPlayer) return;
         if (isControllingCursor) return;
+        if (!isGrounded) return; // Prevent using tools mid-air
+        if (isUsingTool) return; // Prevent spamming tool use
+        if (ToolDictionary[currentToolID].IsOnCooldown)
+        {
+            Debug.Log("Tool is on cooldown.");
+            return;
+        }
         if (context.performed)
         {
             Debug.Log($"Using current tool: {currentToolID}");
-            ToolDictionary[currentToolID].UseTool();
-            if (currentToolID == tools[0].ID)
-            {
-                isUsingScanTool = true;
-            }
-            else
-            {
-                isUsingTool = true;
-            }
+            isUsingTool = true;
         }
     }
 
@@ -206,16 +276,22 @@ public partial class Player
     {
         if (context.performed)
         {
-            isControllingPlayer = false;
-            CursorToggleOn();
-            CanvasMainGame.Instance.ShowPausedMenu();
+            TogglePauseState();
+            CanvasMainGame.Instance.TogglePausedMenu();
         }
     }
 
-    public void OnResumeFromPause()
+    public void TogglePauseState()
     {
-        isControllingPlayer = true;
-        CursorToggleOff();
+        isControllingPlayer = !isControllingPlayer;
+        if (isControllingPlayer)
+        {
+            CursorToggleOff();
+        }
+        else
+        {
+            CursorToggleOn();
+        }
     }
 
     private void CursorToggleOn()
@@ -230,6 +306,16 @@ public partial class Player
         isControllingCursor = false;
         cameraAxisController.enabled = true;
         CursorController.Instance.HideCursor();
+    }
+
+    private void ReplenishAndSubmitScans()
+    {
+        currentHealth = maxHealth;
+        OnHealthChanged?.Invoke(currentHealth);
+        currentStamina = maxStamina;
+        OnStaminaChanged?.Invoke(currentStamina);
+        ReplenishAllTools();
+        OnScansSubmitted?.Invoke();
     }
 
     /*

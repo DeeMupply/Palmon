@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 /// <summary>
 /// Central coordinator for game systems and save/load operations
@@ -7,13 +8,19 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    [SerializeField] private Vector3 firstPlayPosition;
+    [SerializeField] private Quaternion firstPlayRotation;
+    [SerializeField] private ToolSO startingTool;
 
     [Header("Game Data")]
     [SerializeField] private GameData activeGameData;
 
+    [Header("Initial Data")]
+
+
     // Other systems
     [Header("Other Systems")]
-    public bool IsGameJustLaunched {get; private set;} = true;
+    public bool IsGameJustLaunched { get; private set; } = true;
     public void SetIsGameJustLaunchedFalse()
     {
         IsGameJustLaunched = false;
@@ -46,7 +53,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Load Data
-    
+
     private void LoadOrCreateGameData()
     {
         // Try to load from save file first
@@ -54,24 +61,42 @@ public class GameManager : MonoBehaviour
         if (loadedData != null)
         {
             activeGameData = loadedData;
-
-            // Load tool data if implemented
-            Player.Instance.LoadToolData(activeGameData.ToolData);
-            Player.Instance.LoadPlayerSaveData(activeGameData.PlayerData);
         }
         else
         {
+            var newPlayerData = new PlayerSaveData(100, 100, firstPlayPosition, firstPlayRotation);
             // Create new game data
-            activeGameData = new GameData(this);
+            activeGameData = new GameData(newPlayerData);
+            Debug.Log("No save file found. Created new game data.");
             // Initialize other systems as needed
         }
+        // Log active game data for debugging
+        Debug.Log(activeGameData);
+    }
+
+    public PlayerSaveData GetActivePlayerSaveData()
+    {
+        if (activeGameData != null)
+        {
+            return activeGameData.PlayerData;
+        }
+        return null;
+    }
+
+    public ToolSaveData GetActiveToolSaveData()
+    {
+        if (activeGameData != null)
+        {
+            return activeGameData.ToolData;
+        }
+        return null;
     }
 
     #endregion
 
     #region Save Data
 
-    private void SaveGameData()
+    public void SaveGameData()
     {
         if (activeGameData != null)
         {
@@ -100,8 +125,22 @@ public class GameManager : MonoBehaviour
 
     #region Auto-Save Events
 
+    private bool CheckActiveSceneIsGameplay()
+    {
+        // Implement scene check logic here if needed
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == SceneNameManager.SCENE_GAMEPLAY)
+        {
+            return true;
+        }
+        return false;
+    }
+
     private void OnApplicationPause(bool pauseStatus)
     {
+        if (!CheckActiveSceneIsGameplay())
+        {
+            return;
+        }
         // Only auto-save if we have valid game data AND game is actually running
         if (pauseStatus && activeGameData != null && Time.time > 5f) // 5 seconds after start
         {
@@ -111,6 +150,10 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationFocus(bool hasFocus)
     {
+        if (!CheckActiveSceneIsGameplay())
+        {
+            return;
+        }
         // Only auto-save if losing focus AND game has been running for a while
         if (!hasFocus && activeGameData != null && Time.time > 5f) // 5 seconds after start
         {
@@ -120,14 +163,22 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        if (!CheckActiveSceneIsGameplay())
+        {
+            return;
+        }
         if (activeGameData != null)
         {
             SaveGameData();
         }
     }
-    
+
     private void OnDestroy()
     {
+        if (!CheckActiveSceneIsGameplay())
+        {
+            return;
+        }
         // Safety save if GameManager is being destroyed unexpectedly
         if (activeGameData != null && Instance == this)
         {

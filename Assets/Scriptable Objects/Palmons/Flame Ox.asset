@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f4238db51ed0e449304b9b71fc5149, type: 3}
   m_Name: Flame Ox
   m_EditorClassIdentifier: 
-  palmonName: New Palmon
-  moveSpeed: 3.5
+  palmonName: Flame Ox
+  walkSpeed: 3.5
+  runSpeed: 6
   rotationSpeed: 2
   rotationThresholdAngle: 10
-  detectionRange: 5
-  attackDamage: 10
-  attackRange: 2
+  detectionRange: 12
+  attackDamage: 20
+  attackRange: 9
   attackCooldown: 1

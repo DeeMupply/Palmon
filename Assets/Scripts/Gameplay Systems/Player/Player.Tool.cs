@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,12 @@ public partial class Player
 
     public Dictionary<string, Tool> ToolDictionary {get; private set;}= new Dictionary<string, Tool>();
 
+    [SerializeField] private List<IngameToolObjectReferences> ingameToolObjectReferences;
+
+    private Dictionary<string, IngameToolObjectReferences> ingameToolObjectReferenceDictionary = new Dictionary<string, IngameToolObjectReferences>();
+
     public event System.Action OnCurrentToolChanged;
+    public event System.Action<int> OnAdnChanged;
 
     // Internal fields
     private string currentToolID;
@@ -42,10 +48,19 @@ public partial class Player
         }
     }
 
+    private void InitializeIngameToolObjectReferences()
+    {
+        foreach (var reference in ingameToolObjectReferences)
+        {
+            reference.ToolObjectInHand.SetActive(false);
+            reference.ToolObjectInPocket.SetActive(false);
+            ingameToolObjectReferenceDictionary[reference.ToolData.ID] = reference;
+        }
+    }
+
     private void InitializeCurrentTool()
     {
-        currentToolID = tools[0].ID; // Set default tool
-        OnCurrentToolChanged?.Invoke();
+        SwitchToTool(tools[0].ID); // Default to first tool
     }
 
     private void UpdateToolCooldowns()
@@ -64,29 +79,37 @@ public partial class Player
         }
     }
 
-    private void UseToolScan()
+    private bool SwitchToTool(string toolID)
     {
-        // Implement scan tool usage logic here
-    }
-    
-    private void UseToolBait()
-    {
-        // Implement bait tool usage logic here
-    }
-
-    private void UseToolHeal()
-    {
-        // Implement heal tool usage logic here
-    }
-
-    private void UseToolInvisible()
-    {
-        // Implement invisible tool usage logic here
+        if (ToolDictionary.ContainsKey(toolID))
+        {
+            if (currentToolID != null && !string.IsNullOrEmpty(currentToolID))
+                ingameToolObjectReferenceDictionary[ currentToolID ].ToolObjectInPocket.SetActive(false);
+            currentToolID = toolID;
+            ingameToolObjectReferenceDictionary[ currentToolID ].ToolObjectInPocket.SetActive(true);
+            OnCurrentToolChanged?.Invoke();
+            return true;
+        }
+        Debug.LogWarning($"Tool with ID {toolID} not found.");
+        return false;
     }
 
-    private void UseToolDetect()
+    public void TakeoutTool()
     {
-        // Implement detect tool usage logic here
+        ingameToolObjectReferenceDictionary[ currentToolID ].ToolObjectInPocket.SetActive(false);
+        ingameToolObjectReferenceDictionary[ currentToolID ].ToolObjectInHand.SetActive(true);
+    }
+
+    public void UseTool()
+    {
+        ToolDictionary[currentToolID].UseTool();
+    }
+
+    public void ReturnTool()
+    {
+        ingameToolObjectReferenceDictionary[ currentToolID ].ToolObjectInHand.SetActive(false);
+        ingameToolObjectReferenceDictionary[ currentToolID ].ToolObjectInPocket.SetActive(true);
+        isUsingTool = false;
     }
 
     public Tool GetCurrentTool()
@@ -108,6 +131,7 @@ public partial class Player
     {
         ToolSaveData saveData = new ToolSaveData();
         saveData.CurrentADN = currentADN;
+        saveData.CurrentToolID = currentToolID;
         saveData.ToolEntries = new List<ToolSaveDataEntry>();
 
         foreach (var tool in ToolDictionary.Values)
@@ -115,7 +139,9 @@ public partial class Player
             ToolSaveDataEntry entry = new ToolSaveDataEntry
             {
                 ToolID = tool.ToolData.ID,
-                CurrentLevel = tool.CurrentLevel
+                CurrentLevel = tool.CurrentLevel,
+                CurrentCooldown = tool.CurrentCooldown,
+                CurrentLeftUses = tool.CurrentLeftUses
             };
             saveData.ToolEntries.Add(entry);
         }
@@ -125,30 +151,71 @@ public partial class Player
 
     public void LoadToolData(ToolSaveData saveData)
     {
+        if (saveData == null) return;
         currentADN = saveData.CurrentADN;
-
+        currentToolID = saveData.CurrentToolID;
+        if (saveData.ToolEntries == null  || saveData.ToolEntries.Count == 0) return;
         foreach (var entry in saveData.ToolEntries)
         {
             Tool tool = GetToolByID(entry.ToolID);
             if (tool != null)
             {
                 tool.CurrentLevel = entry.CurrentLevel;
-                tool.ResetUses();
+                tool.CurrentCooldown = entry.CurrentCooldown;
+                tool.CurrentLeftUses = entry.CurrentLeftUses;
             }
         }
+        SwitchToTool(currentToolID);
+    }
+
+    private void ReplenishAllTools()
+    {
+        foreach (var tool in ToolDictionary.Values)
+        {
+            tool.ResetUses();
+            tool.CurrentCooldown = 0f;
+            tool.OnToolReplenished?.Invoke();
+        }
+    }
+
+    public void AddADN(int amount)
+    {
+        currentADN += amount;
+        OnAdnChanged?.Invoke(currentADN);
+    }
+
+    public void DeductADN(int amount)
+    {
+        currentADN -= amount;
+        if (currentADN < 0)
+            currentADN = 0;
+        OnAdnChanged?.Invoke(currentADN);
+    }
+
+    [System.Serializable]
+    public class IngameToolObjectReferences
+    {
+        public ToolSO ToolData;
+        public GameObject ToolObjectInPocket;
+        public GameObject ToolObjectInHand;
     }
 }
 
+[System.Serializable]
 public class ToolSaveData
 {
     public int CurrentADN;
+    public string CurrentToolID;
     public List<ToolSaveDataEntry> ToolEntries;
 }
 
+[System.Serializable]
 public class ToolSaveDataEntry
 {
     public string ToolID;
     public int CurrentLevel;
+    public float CurrentCooldown;
+    public int CurrentLeftUses;
 }
 
 public class Tool
@@ -163,6 +230,7 @@ public class Tool
     public System.Action OnToolUsed;
     public System.Action OnToolLeveledUp;
     public System.Action OnToolCooldownUpdated;
+    public System.Action OnToolReplenished;
 
     public Tool(ToolSO toolSO, System.Action onToolUsed)
     {

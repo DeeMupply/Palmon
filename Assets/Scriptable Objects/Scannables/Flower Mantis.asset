@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b1891d2828f6c41a0c11c0e187618c, type: 3}
+  m_Name: Flower Mantis
+  m_EditorClassIdentifier: 
+  scannableName: Flower Mantis
+  scannableDescription: 
+  scannableIcon: {fileID: 21300000, guid: eced36b079fbfb947b1b8f8b05bb3be0, type: 3}
+  scansRequired: 20
+  scanTime: 2
+  adnPerScan: 20

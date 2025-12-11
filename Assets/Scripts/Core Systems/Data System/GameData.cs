@@ -9,22 +9,50 @@ using System.Collections.Generic;
 public class GameData
 {
     [Header("Tool Data")]
-    public ToolSaveData ToolData {get; private set;}
+    [SerializeField] private ToolSaveData toolData;
 
     [Header("Player Stats")]
-    public PlayerSaveData PlayerData {get; private set;}
+    [SerializeField] private PlayerSaveData playerData;
+
+    // Public properties for access (Unity will serialize the private fields)
+    public ToolSaveData ToolData => toolData;
+    public PlayerSaveData PlayerData => playerData;
 
     /// <summary>
     /// Default constructor - creates GameData with safe initial values
     /// </summary>
-    public GameData(object editor)
+    public GameData()
+    {
+        toolData = new ToolSaveData();
+        playerData = new PlayerSaveData();
+    }
+
+    public GameData(PlayerSaveData playerData)
+    {
+        this.toolData = new ToolSaveData();
+        this.playerData = playerData;
+    }
+
+    // Tool data management
+    internal bool SetToolData(ToolSaveData data, GameManager editor)
     {
         if (!ValidateEditor(editor))
         {
-            throw new System.UnauthorizedAccessException("Only GameManager can create GameData instances.");
+            throw new System.UnauthorizedAccessException("Only GameManager can modify tool data.");
         }
-        ToolData = new ToolSaveData();
-        PlayerData = new PlayerSaveData();
+        toolData = data;
+        return true;
+    }
+
+    // Player data management
+    internal bool SetPlayerData(PlayerSaveData data, GameManager editor)
+    {
+        if (!ValidateEditor(editor))
+        {
+            throw new System.UnauthorizedAccessException("Only GameManager can modify player data.");
+        }
+        playerData = data;
+        return true;
     }
 
     /// <summary>
@@ -38,27 +66,5 @@ public class GameData
         }
 
         return false;
-    }
-
-    // Tool data management
-    internal bool SetToolData(ToolSaveData data, GameManager editor)
-    {
-        if (!ValidateEditor(editor))
-        {
-            throw new System.UnauthorizedAccessException("Only GameManager can modify tool data.");
-        }
-        ToolData = data;
-        return true;
-    }
-
-    // Player data management
-    internal bool SetPlayerData(PlayerSaveData data, GameManager editor)
-    {
-        if (!ValidateEditor(editor))
-        {
-            throw new System.UnauthorizedAccessException("Only GameManager can modify player data.");
-        }
-        PlayerData = data;
-        return true;
     }
 }

@@ -55,7 +55,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2019256050447406947, guid: 393cd99a61350354bbd8e60191457df6, type: 3}
+  - {fileID: 2100000, guid: ecb0ef2893dc41b48b1f9ff0cd649c6a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -757,6 +757,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: b7c8dc0242dc3db49aecf68f0e4e03ac, type: 2}
     - target: {fileID: -4409222534641795329, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
+      propertyPath: isDrawingGizmos
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4409222534641795329, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: palmonEventBehaviours.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -770,27 +774,27 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: a642a8abf4439cc46ac38255abc05b70, type: 2}
     - target: {fileID: 2146540651346001201, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.75
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2146540651346001201, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.75
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2146540651346001201, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.75
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2146540651346001201, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.18
+      value: -62.200188
       objectReference: {fileID: 0}
     - target: {fileID: 2146540651346001201, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 50.37
       objectReference: {fileID: 0}
     - target: {fileID: 2146540651346001201, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 101.91
       objectReference: {fileID: 0}
     - target: {fileID: 2146540651346001201, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_LocalRotation.w

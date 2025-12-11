@@ -13,5 +13,29 @@ MonoBehaviour:
   m_Name: PlayerASM
   m_EditorClassIdentifier: 
   objectTypeName: Player
-  animationStateMaps: []
+  animationStateMaps:
+  - clip: {fileID: 7400000, guid: 0128f99f395470646b2a88c881e1a937, type: 2}
+    key: Die
+    value: Armature_Die
+    isIncludedInUsage: 1
+  - clip: {fileID: 7400000, guid: 77e21d2ea3d520a4591a456145086fe2, type: 2}
+    key: Hit
+    value: Armature_Hit
+    isIncludedInUsage: 1
+  - clip: {fileID: 7400000, guid: abe3b1b7a51436245b4155f1d929929d, type: 2}
+    key: Idle
+    value: Armature_Idle
+    isIncludedInUsage: 1
+  - clip: {fileID: 7400000, guid: 22a88d2876a61264498e396167cd505e, type: 2}
+    key: Interact
+    value: Armature_Interact
+    isIncludedInUsage: 1
+  - clip: {fileID: 7400000, guid: 495d369588922984594f4c9f9dba03dc, type: 2}
+    key: Run
+    value: Armature_Running
+    isIncludedInUsage: 1
+  - clip: {fileID: 7400000, guid: eb8d1265ed6df904d9cce1a0b2d4d0b8, type: 2}
+    key: Jump
+    value: Armature_Jump
+    isIncludedInUsage: 1
   PathToSaveGeneratedClass: Assets/Scripts/Gameplay Systems/Player/

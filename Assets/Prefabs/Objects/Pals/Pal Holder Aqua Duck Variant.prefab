@@ -276,7 +276,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -2633877473353254578, guid: 01604bc62c27ec249be60c42798a36d4, type: 3}
+  - {fileID: 2100000, guid: 70c9155833beb4d488c5915bd6b4efc3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -982,6 +982,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 5a0b63ddbfeb4574da7725b69d1fa86a, type: 2}
     - target: {fileID: -4409222534641795329, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
+      propertyPath: isDrawingGizmos
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4409222534641795329, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: palmonEventBehaviours.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1007,7 +1011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2146540651346001201, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.03
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2146540651346001201, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_LocalPosition.y

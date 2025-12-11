@@ -3,7 +3,12 @@ guid: 393cd99a61350354bbd8e60191457df6
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RockSnake_Texture
+    second: {fileID: 2100000, guid: ecb0ef2893dc41b48b1f9ff0cd649c6a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

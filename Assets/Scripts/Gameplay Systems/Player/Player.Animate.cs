@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Player
@@ -6,10 +7,11 @@ public partial class Player
     [Header("Player Animation")]
     [SerializeField] private Animator animator;
     [SerializeField] private AnimationStateMapperSO playerASM;
+    [SerializeField] private List<Player_OnEvent_Behaviour> playerEventBehaviours;
     
     private bool isDying = false;
     private bool isHit = false;
-    private bool isUsingScanTool = false;
+    // private bool isUsingScanTool = false;
     private bool isUsingTool = false;
     private bool isJumping = false;
     private bool isSprinting = false;
@@ -19,46 +21,62 @@ public partial class Player
     {
         if (isDying)
         {
-            // animator.Play(playerASM[PlayerAnimationKeys.Die]);
+            animator.Play(playerASM[PlayerAnimationKeys.Die]);
             return;
         }
 
         if (isHit)
         {
-            // animator.Play(playerASM[PlayerAnimationKeys.Hit]);
-            return;
-        }
-
-        if (isUsingScanTool)
-        {
-            // animator.Play(playerASM[PlayerAnimationKeys.UseScanTool]);
+            animator.speed = 1.0f;
+            animator.Play(playerASM[PlayerAnimationKeys.Hit]);
             return;
         }
 
         if (isUsingTool)
         {
-            // animator.Play(playerASM[PlayerAnimationKeys.UseTool]);
+            animator.Play(playerASM[PlayerAnimationKeys.Interact]);
             return;
         }
 
         if (isJumping)
         {
-            // animator.Play(playerASM[PlayerAnimationKeys.Jump]);
+            animator.Play(playerASM[PlayerAnimationKeys.Jump]);
             return;
         }
 
         if (isSprinting)
         {
-            // animator.Play(playerASM[PlayerAnimationKeys.Sprint]);
+            animator.Play(playerASM[PlayerAnimationKeys.Run]);
             return;
         }
 
         if (isMoving)
         {
-            // animator.Play(playerASM[PlayerAnimationKeys.Run]);
+            animator.Play(playerASM[PlayerAnimationKeys.Run]);
             return;
         }
 
-        // animator.Play(playerASM[PlayerAnimationKeys.Idle]);
+        animator.Play(playerASM[PlayerAnimationKeys.Idle]);
+    }
+
+    public List<Player_OnEvent_Behaviour> GetPlayerEventBehaviours()
+    {
+        Debug.Log($"Getting {playerEventBehaviours.Count} player event behaviours");
+        return playerEventBehaviours;
+    }
+
+    public void SetIsDyingToFalse()
+    {
+        isDying = false;
+    }
+
+    private void ResetAllAnimationFlags()
+    {
+        isDying = false;
+        isHit = false;
+        isUsingTool = false;
+        isJumping = false;
+        isSprinting = false;
+        isMoving = false;
     }
 }

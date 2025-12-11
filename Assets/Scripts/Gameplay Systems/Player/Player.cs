@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
 {
     public static Player Instance { get; private set; }
+    [SerializeField] private Vector3 respawnPosition;
+    [SerializeField] private Quaternion respawnRotation;
 
     private void Awake()
     {
@@ -35,7 +37,10 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
             Debug.LogWarning("GroundCheck transform was not assigned. Created a new one.");
         }
         InitializeStatus();
+        InitializeIngameToolObjectReferences();
         InitializeCurrentTool();
+        LoadToolData(GameManager.Instance.GetActiveToolSaveData());
+        LoadPlayerSaveData(GameManager.Instance.GetActivePlayerSaveData());
     }
 
     private void OnDestroy()
@@ -69,22 +74,42 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
         }
     }
 
+    public void Respawn()
+    {
+        // Reset Animation
+        ResetAllAnimationFlags();
+        animator.speed = 1f;
+
+        // Move player to respawn position
+        characterController.enabled = false;
+        transform.SetLocalPositionAndRotation(respawnPosition, respawnRotation);
+        characterController.enabled = true;
+        velocity = Vector3.zero;
+
+        // Reset Status
+        currentHealth = maxHealth;
+        currentStamina = maxStamina;
+        OnHealthChanged?.Invoke(currentHealth);
+        OnStaminaChanged?.Invoke(currentStamina);
+        ReplenishAllTools();
+    }
+
     public Transform GetTransform()
     {
         return transform;
     }
-
     public PlayerSaveData GetPlayerSaveData()
     {
-        return new PlayerSaveData(currentHealth, currentStamina, currentToolID, transform.position);
+        return new PlayerSaveData(currentHealth, currentStamina, transform.localPosition, transform.localRotation);
     }
 
     public void LoadPlayerSaveData(PlayerSaveData saveData)
     {
         currentHealth = saveData.currentHealth;
         currentStamina = saveData.currentStamina;
-        currentToolID = saveData.currentToolID;
-        transform.position = new Vector3(saveData.playerPosition.x, saveData.playerPosition.y + 1, saveData.playerPosition.z);
+        OnHealthChanged?.Invoke(currentHealth);
+        OnStaminaChanged?.Invoke(currentStamina);
+        transform.SetLocalPositionAndRotation(new Vector3(saveData.playerPosition.x, saveData.playerPosition.y + 1, saveData.playerPosition.z), new Quaternion(saveData.playerRotation.x, saveData.playerRotation.y, saveData.playerRotation.z, saveData.playerRotation.w));
     }
 }
 
@@ -93,16 +118,16 @@ public class PlayerSaveData
 {
     public float currentHealth = 100f;
     public float currentStamina = 100f;
-    public string currentToolID = "";
     public SerializableVector3 playerPosition;
+    public SerializableQuaternion playerRotation;
 
     public PlayerSaveData() { }
 
-    public PlayerSaveData(float health, float stamina, string toolID, Vector3 position)
+    public PlayerSaveData(float health, float stamina, Vector3 position, Quaternion rotation)
     {
         currentHealth = health;
         currentStamina = stamina;
-        currentToolID = toolID;
         playerPosition = position;
+        playerRotation = rotation;
     }
 }

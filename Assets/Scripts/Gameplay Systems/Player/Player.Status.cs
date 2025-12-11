@@ -12,8 +12,11 @@ public partial class Player
     [SerializeField] private float staminaRegenRate = 5f; // Stamina regenerated per second
     [SerializeField] private float sprintStaminaCost = 10f; // Stamina cost per second while sprinting
 
+    [SerializeField] Player_OnEvent_Behaviour onDieBehaviour;
+
     public Action<float> OnHealthChanged;
     public Action<float> OnStaminaChanged;
+    public Action OnPlayerDeath;
 
     private void InitializeStatus()
     {
@@ -55,10 +58,31 @@ public partial class Player
             Die();
         }
     }
+
+    private void RegenHealth(float amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+
+        OnHealthChanged?.Invoke(currentHealth);
+    }
+    
     private void Die()
     {
         Debug.Log("Player has died.");
         // Additional death handling logic can be added here
+        isDying = true;
+    }
+
+    public void InvokeDeathEvent()
+    {
+        OnPlayerDeath?.Invoke();
+    }
+
+    public Player_OnEvent_Behaviour GetOnDieBehaviour()
+    {
+        return onDieBehaviour;
     }
 
     public float GetMaxHealth()

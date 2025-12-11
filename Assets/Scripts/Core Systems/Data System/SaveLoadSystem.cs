@@ -121,7 +121,7 @@ public static class SaveLoadSystem
     {
         // Create a fresh GameData with safe defaults
         // GameData is now a regular class, not a MonoBehaviour
-        GameData backupData = new(GameManager.Instance);
+        GameData backupData = new();
 
         return backupData;
     }

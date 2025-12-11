@@ -35,6 +35,11 @@ public class ToolSO : ScriptableObject
     {
         return baseMaxUses + (useIncrementPerLevel * (level - 1));
     }
+
+    public int GetUpgradeCostAtLevel(int level)
+    {
+        return adnPerLevel * level;
+    }
 }
 
 public enum ToolType

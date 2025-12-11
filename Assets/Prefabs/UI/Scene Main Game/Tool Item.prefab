@@ -289,7 +289,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &818864600450913237
 RectTransform:
   m_ObjectHideFlags: 0
@@ -419,6 +419,7 @@ GameObject:
   - component: {fileID: 3934859794886380901}
   - component: {fileID: 6444268606136409600}
   - component: {fileID: 2085664029737546492}
+  - component: {fileID: 1293107396498652765}
   m_Layer: 5
   m_Name: Tool Item
   m_TagString: Untagged
@@ -490,6 +491,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1293107396498652765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2551335361288473051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4881b237fd553b548ab9670110039658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolIcon: {fileID: 2373985744977064315}
+  toolNameText: {fileID: 455909042928778650}
+  toolLevelText: {fileID: 1302984906966243229}
+  toolCooldownText: {fileID: 2292313442137637289}
+  toolUsesText: {fileID: 7206204047044166943}
+  upgradeCostText: {fileID: 7932393619159045217}
+  toolSO: {fileID: 0}
 --- !u!1 &2939603628204634875
 GameObject:
   m_ObjectHideFlags: 0

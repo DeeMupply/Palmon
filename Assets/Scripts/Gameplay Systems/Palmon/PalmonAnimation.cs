@@ -14,6 +14,9 @@ public abstract class PalmonAnimation : MonoBehaviour
             case PalmonState.Moving:
                 OnMoving();
                 break;
+            case PalmonState.Running:
+                OnRunning();
+                break;
             case PalmonState.Attacking:
                 OnAttacking();
                 break;
@@ -30,6 +33,7 @@ public abstract class PalmonAnimation : MonoBehaviour
     }
     public abstract void OnIdle();
     public abstract void OnMoving();
+    public abstract void OnRunning();
     public abstract void OnAttacking();
     public abstract void OnRotateWithoutMoving();
     public abstract void OnHit();

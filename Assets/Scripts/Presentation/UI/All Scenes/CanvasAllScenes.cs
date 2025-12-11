@@ -33,4 +33,10 @@ public class CanvasAllScenes : MonoBehaviour
     {
         groupSettings.ShowWithEffect(onCloseComplete);
     }
+
+    [ContextMenu("Toggle Settings Group")]
+    public void ToggleSettingsGroup()
+    {
+        groupSettings.Toggle();
+    }
 }

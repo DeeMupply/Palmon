@@ -10,6 +10,7 @@ public partial class Player
     [SerializeField] private float maxStamina = 100f;
     [SerializeField] private float currentStamina;
     [SerializeField] private float staminaRegenRate = 5f; // Stamina regenerated per second
+    [SerializeField] private float staminaRegenRateWhileIdle = 7f; // Stamina regenerated per second while idle
     [SerializeField] private float sprintStaminaCost = 10f; // Stamina cost per second while sprinting
 
     [SerializeField] Player_OnEvent_Behaviour onDieBehaviour;
@@ -40,7 +41,8 @@ public partial class Player
         }
         else
         {
-            currentStamina = Mathf.Min(maxStamina, currentStamina + staminaRegenRate * Time.deltaTime);
+            float regenRate = (!isMoving) ? staminaRegenRateWhileIdle : staminaRegenRate;
+            currentStamina = Mathf.Min(maxStamina, currentStamina + regenRate * Time.deltaTime);
             OnStaminaChanged?.Invoke(currentStamina);
         }
     }

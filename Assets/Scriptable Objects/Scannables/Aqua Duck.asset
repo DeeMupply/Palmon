@@ -15,6 +15,6 @@ MonoBehaviour:
   scannableName: Aqua Duck
   scannableDescription: 
   scannableIcon: {fileID: 21300000, guid: f78b30f32ad57654ca8bdc1ff5be513c, type: 3}
-  scansRequired: 20
+  scansRequired: 2
   scanTime: 2
-  adnPerScan: 20
+  adnPerScan: 200

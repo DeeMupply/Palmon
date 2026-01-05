@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   palmonName: Flame Ox
   walkSpeed: 3.5
-  runSpeed: 6
+  runSpeed: 9
   rotationSpeed: 2
   rotationThresholdAngle: 10
-  detectionRange: 12
+  detectionRange: 14
+  baitDetectionRange: 17
+  eatingRange: 2.44
   attackDamage: 20
-  attackRange: 9
+  attackRange: 11
   attackCooldown: 1

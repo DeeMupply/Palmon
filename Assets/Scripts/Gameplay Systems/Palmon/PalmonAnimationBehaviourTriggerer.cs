@@ -17,7 +17,7 @@ public class PalmonAnimationBehaviourTriggerer : StateMachineBehaviour
             }
         }
         lastLoop = -1; // reset for new entry
-        Debug.Log($"Entered state {animator.GetCurrentAnimatorStateInfo(0).shortNameHash}, found {receivers?.Count ?? 0} receivers");
+        // Debug.Log($"Entered state {animator.GetCurrentAnimatorStateInfo(0).shortNameHash}, found {receivers?.Count ?? 0} receivers");
     }
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -40,7 +40,7 @@ public class PalmonAnimationBehaviourTriggerer : StateMachineBehaviour
             if (!behaviour.hasTriggered && t >= behaviour.A2BProfile.NormalizedTime)
             {
                 behaviour.OnEventBehave();
-                Debug.Log($"Triggered behaviour {behaviour.GetType().Name} at normalized time {t} (profile time {behaviour.A2BProfile.NormalizedTime})");
+                // Debug.Log($"Triggered behaviour {behaviour.GetType().Name} at normalized time {t} (profile time {behaviour.A2BProfile.NormalizedTime})");
                 behaviour.hasTriggered = true;
             }
         }

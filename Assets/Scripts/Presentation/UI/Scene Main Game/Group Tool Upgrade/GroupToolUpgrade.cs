@@ -36,12 +36,14 @@ public class GroupToolUpgrade : MonoBehaviour
 
     public void OnExitButtonClicked()
     {
+        SoundManager.Instance.PlayButton();
         GlobalUIController.HideGroup(upgradeGroup);
         onCloseComplete?.Invoke();
     }
 
     public void OnSwitchTabButtonPressed()
     {
+        SoundManager.Instance.PlayButton();
         GlobalUIController.HideGroup(upgradeGroup);
         CanvasMainGame.Instance.ShowSpeciesMenu();
     }

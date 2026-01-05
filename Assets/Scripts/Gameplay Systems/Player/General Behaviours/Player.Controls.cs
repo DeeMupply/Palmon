@@ -38,8 +38,8 @@ public partial class Player
     private Vector3 velocity;
     private Vector2 moveInput;
     private bool isGrounded;
-    private bool isControllingCursor = false;
-    private bool isControllingPlayer = true;
+    [SerializeField] private bool isControllingCursor = false;
+    [SerializeField] private bool isControllingPlayer = true;
     public event Action OnScansSubmitted;
 
     private Transform targetingPalmon;
@@ -187,6 +187,8 @@ public partial class Player
         if (isUsingTool) return; // Prevent switching tools while using one
         if (context.performed)
         {
+            if (currentToolID == tools[1].ID) return; // Already using Tool 1
+            SetInvisibleState(false);
             Debug.Log("Tool 1 activated.");
             SwitchToTool(tools[1].ID);
         }
@@ -198,6 +200,8 @@ public partial class Player
         if (isUsingTool) return; // Prevent switching tools while using one
         if (context.performed)
         {
+            if (currentToolID == tools[2].ID) return; // Already using Tool 2
+            SetInvisibleState(false);
             Debug.Log("Tool 2 activated.");
             SwitchToTool(tools[2].ID);
         }
@@ -205,10 +209,13 @@ public partial class Player
 
     public void OnTool3(InputAction.CallbackContext context)
     {
+        SetInvisibleState(false);
         if (!isControllingPlayer) return;
         if (isUsingTool) return; // Prevent switching tools while using one
         if (context.performed)
         {
+            if (currentToolID == tools[3].ID) return; // Already using Tool 3
+            SetInvisibleState(false);
             Debug.Log("Tool 3 activated.");
             SwitchToTool(tools[3].ID);
         }
@@ -216,10 +223,13 @@ public partial class Player
 
     public void OnTool4(InputAction.CallbackContext context)
     {
+
         if (!isControllingPlayer) return;
         if (isUsingTool) return; // Prevent switching tools while using one
         if (context.performed)
         {
+            if (currentToolID == tools[4].ID) return; // Already using Tool 4
+            SetInvisibleState(false);
             Debug.Log("Tool 4 activated.");
             SwitchToTool(tools[4].ID);
         }
@@ -227,10 +237,13 @@ public partial class Player
 
     public void OnToolScan(InputAction.CallbackContext context)
     {
+
         if (!isControllingPlayer) return;
         if (isUsingTool) return; // Prevent switching tools while using one
         if (context.performed)
         {
+            if (currentToolID == tools[0].ID) return; // Already using Tool Scan
+            SetInvisibleState(false);
             Debug.Log("Tool Scan activated.");
             SwitchToTool(tools[0].ID);
         }
@@ -242,18 +255,19 @@ public partial class Player
         if (isControllingCursor) return;
         if (!isGrounded) return; // Prevent using tools mid-air
         if (isUsingTool) return; // Prevent spamming tool use
-        if (isAtDock)
-        {
-            ReplenishAndSubmitScans();
-            return;
-        }
-        if (ToolDictionary[currentToolID].IsOnCooldown)
-        {
-            Debug.Log("Tool is on cooldown.");
-            return;
-        }
         if (context.performed)
         {
+            if (isAtDock)
+            {
+                SoundManager.Instance.PlayToolUse();
+                ReplenishAndSubmitScans();
+                return;
+            }
+            if (ToolDictionary[currentToolID].IsOnCooldown)
+            {
+                Debug.Log("Tool is on cooldown.");
+                return;
+            }
             Debug.Log($"Using current tool: {currentToolID}");
             isUsingTool = true;
             StopPlayerMovement();
@@ -290,15 +304,23 @@ public partial class Player
     {
         if (context.performed)
         {
-            CanvasMainGame.Instance.HideAllMenusExceptDeathPopupAndPaused();
-            TogglePauseState();
-            CanvasMainGame.Instance.TogglePausedMenu();
+            if (!isControllingPlayer) // If already paused, unpause
+            {
+                CanvasMainGame.Instance.HideAllMenusExceptDeathPopupAndPaused();
+                SetPauseState(false);
+                CanvasMainGame.Instance.HidePausedMenu();
+            }
+            else
+            {
+                SetPauseState(true);
+                CanvasMainGame.Instance.ShowPausedMenu();
+            }
         }
     }
 
-    public void TogglePauseState()
+    public void SetPauseState(bool isPaused)
     {
-        isControllingPlayer = !isControllingPlayer;
+        isControllingPlayer = !isPaused;
         if (isControllingPlayer)
         {
             CursorToggleOff();
@@ -330,7 +352,52 @@ public partial class Player
         currentStamina = maxStamina;
         OnStaminaChanged?.Invoke(currentStamina);
         ReplenishAllTools();
+        CanvasMainGame.Instance.ShowPausedMenu();
         OnScansSubmitted?.Invoke();
+        CheckAllQuests();
+    }
+
+    public void CheckAllQuests()
+    {
+        // Find PanelScanQuest in the scene
+        PanelScanQuest panelScanQuest = FindObjectOfType<PanelScanQuest>();
+
+        if (panelScanQuest == null)
+        {
+            Debug.LogWarning("PanelScanQuest not found in scene!");
+            return;
+        }
+
+        // Get all scan quest entries
+        var allEntries = panelScanQuest.GetAllScanQuestEntries();
+
+        if (allEntries == null || allEntries.Count == 0)
+        {
+            Debug.LogWarning("No scan quest entries found!");
+            return;
+        }
+
+        // Check if all quests are completed
+        bool allQuestsCompleted = true;
+        foreach (var entry in allEntries)
+        {
+            if (entry != null && !entry.IsQuestCompleted())
+            {
+                allQuestsCompleted = false;
+                break;
+            }
+        }
+
+        // Invoke win event if all quests are completed
+        if (allQuestsCompleted)
+        {
+            Debug.Log("All scan quests completed! Player wins!");
+            OnPlayerWin?.Invoke();
+        }
+        else
+        {
+            Debug.Log("Some quests are still incomplete.");
+        }
     }
 
     /*

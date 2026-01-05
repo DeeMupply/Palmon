@@ -150,6 +150,7 @@ public partial class Player
     {
         if (saveData == null) return;
         currentADN = saveData.CurrentADN;
+        OnAdnChanged?.Invoke(currentADN);
         currentToolID = saveData.CurrentToolID;
         if (saveData.ToolEntries == null  || saveData.ToolEntries.Count == 0) return;
         foreach (var entry in saveData.ToolEntries)

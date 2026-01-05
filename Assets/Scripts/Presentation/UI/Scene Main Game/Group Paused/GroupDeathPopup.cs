@@ -41,13 +41,13 @@ public class GroupDeathPopup : MonoBehaviour
     public void ShowGroupDeathPopup()
     {
         GlobalUIController.ShowGroup(groupDeathPopup);
-        Player.Instance.TogglePauseState();
+        Player.Instance.SetPauseState(true);
     }
 
     private void HideGroupDeathPopup()
     {
         GlobalUIController.HideGroup(groupDeathPopup);
-        Player.Instance.TogglePauseState();
+        Player.Instance.SetPauseState(false);
     }
 
     public void ToggleGroupDeathPopup()

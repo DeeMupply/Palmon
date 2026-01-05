@@ -33,4 +33,9 @@ public class CursorController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
+
+    public Camera GetMainCamera()
+    {
+        return mainCamera;
+    }
 }

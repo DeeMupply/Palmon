@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3908812224681190186}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Front.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6254369855354821254}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7113166311138592598}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Front.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 580575594831590561}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Back.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1650867822651272849}
   - component: {fileID: 6315258492621190385}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FlameOx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7387707824016481302}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Front.R.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4370480944560785064}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -312,7 +312,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5692364877221383411}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tail.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6158300262588371308}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Back.L.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,7 +376,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3432728465965733941}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tail.004_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +407,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3078278312807611168}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tail.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +439,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 494178903706228399}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -470,7 +470,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 437362586454887236}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Front.L.002_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5359864681920481495}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Back.R.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -533,7 +533,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 117830279366341325}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Front.R.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -565,7 +565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2076506670598291269}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spine.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -599,7 +599,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2574816074407871759}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Front.L.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +631,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8755096930539427334}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spine.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -663,7 +663,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1988174255670446279}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Back.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -695,7 +695,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4991508712740719947}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tail.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -727,7 +727,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4195966027717635012}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Back.L.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -759,7 +759,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5996296976493091005}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Back.L.002_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -790,7 +790,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2412150115760968974}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Front.L.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,7 +822,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9084251315356056220}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -855,7 +855,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6112859405835177362}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -887,7 +887,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7247651554855104245}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Front.R.002_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -918,7 +918,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8972807572299588195}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Tail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -950,7 +950,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7394546622361998135}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Back.R.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -984,7 +984,7 @@ GameObject:
   - component: {fileID: 2830101018368408871}
   - component: {fileID: 3915755151457978277}
   - component: {fileID: 6707414573463695428}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1049,7 +1049,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4461459983987176365}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Leg_Back.R.002_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1103,9 +1103,25 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 147f59938015e2643b6d16b1d9117632, type: 2}
+    - target: {fileID: 1595533198125110446, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.333333
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595533198125110446, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.333333
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595533198125110446, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.333333
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595533198125110446, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 24.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2146540651346001201, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -60.06
+      value: -56.12
       objectReference: {fileID: 0}
     - target: {fileID: 2146540651346001201, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1113,7 +1129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2146540651346001201, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 83.53
+      value: 86.9
       objectReference: {fileID: 0}
     - target: {fileID: 2146540651346001201, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1159,6 +1175,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 1.03
       objectReference: {fileID: 0}
+    - target: {fileID: 5364789158145225949, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
+      propertyPath: scannableData
+      value: 
+      objectReference: {fileID: 11400000, guid: d1f8ef71a0f7eb34d86e7742d437ff94, type: 2}
     - target: {fileID: 7976754417055407017, guid: c8c57381b897cfd4592c26d2524fb6d2, type: 3}
       propertyPath: m_Name
       value: Pal Holder Flame Ox Variant

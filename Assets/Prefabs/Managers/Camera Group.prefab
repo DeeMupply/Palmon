@@ -29,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 529426686098492809}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000013079299, y: 0.99448544, z: -0.0000001240248, w: 0.10487563}
-  m_LocalPosition: {x: -0.24874115, y: 1.806694, z: 1.4333878}
+  m_LocalRotation: {x: 6.8128686e-10, y: 0.9944854, z: -0.0000000064603265, w: 0.10487548}
+  m_LocalPosition: {x: -0.73477936, y: 1.8069992, z: 3.7113724}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -248,7 +248,7 @@ Transform:
   m_GameObject: {fileID: 7871941215637137846}
   serializedVersion: 2
   m_LocalRotation: {x: -0.16146843, y: -0.6884243, z: 0.6884243, w: -0.16146843}
-  m_LocalPosition: {x: 0.6936226, y: 35.089996, z: 4.8100433}
+  m_LocalPosition: {x: 0, y: 30, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -289,11 +289,11 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 15
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 375
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: d309c5abced64db46a30696b60933617, type: 2}
   m_TargetDisplay: 0
@@ -400,7 +400,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9052026211916238954}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000013079299, y: 0.99448544, z: -0.0000001240248, w: 0.10487563}
+  m_LocalRotation: {x: 3.8700543e-10, y: 0.99448544, z: -0.000000006491361, w: 0.1048755}
   m_LocalPosition: {x: -0.73477936, y: 1.8069992, z: 3.7113724}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -625,7 +625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CollideAgainst:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 320
   IgnoreTag: 
   TransparentLayers:
     serializedVersion: 2

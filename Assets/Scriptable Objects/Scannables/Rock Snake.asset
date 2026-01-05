@@ -15,6 +15,6 @@ MonoBehaviour:
   scannableName: Rock Snake
   scannableDescription: 
   scannableIcon: {fileID: 21300000, guid: 03b135576a385d542bb1e64cdca603a4, type: 3}
-  scansRequired: 15
+  scansRequired: 2
   scanTime: 2
-  adnPerScan: 30
+  adnPerScan: 300

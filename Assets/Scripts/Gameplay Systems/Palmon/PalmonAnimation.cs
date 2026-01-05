@@ -23,11 +23,8 @@ public abstract class PalmonAnimation : MonoBehaviour
             case PalmonState.RotateWithoutMoving:
                 OnRotateWithoutMoving();
                 break;
-            case PalmonState.Hit:
-                OnHit();
-                break;
-            case PalmonState.Dying:
-                OnDying();
+            case PalmonState.Eating:
+                OnEating();
                 break;
         }
     }
@@ -36,8 +33,7 @@ public abstract class PalmonAnimation : MonoBehaviour
     public abstract void OnRunning();
     public abstract void OnAttacking();
     public abstract void OnRotateWithoutMoving();
-    public abstract void OnHit();
-    public abstract void OnDying();
+    public abstract void OnEating();
 
     public Animator GetAnimator()
     {

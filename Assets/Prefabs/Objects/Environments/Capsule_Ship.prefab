@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 1443008924134609495}
   - component: {fileID: 4114425204890389030}
   - component: {fileID: 5678394677078728000}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Capsule_Ship
   m_TagString: Untagged
   m_Icon: {fileID: 0}

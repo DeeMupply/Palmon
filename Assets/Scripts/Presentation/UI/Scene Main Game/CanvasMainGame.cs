@@ -45,6 +45,11 @@ public class CanvasMainGame : MonoBehaviour
         groupPaused.ShowGroupPaused();
     }
 
+    public void HidePausedMenu()
+    {
+        groupPaused.HideGroupPaused();
+    }
+
     public void ShowToolsUpgradeMenu()
     {
         groupToolsUpgrade.ShowWithEffect();

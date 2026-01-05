@@ -6,22 +6,32 @@ public class GroupPaused : MonoBehaviour
     [SerializeField] private CanvasGroup groupPaused;
     public void OnResumeButtonPress()
     {
+        SoundManager.Instance.PlayButton();
         HideGroupPaused();
-        Player.Instance.TogglePauseState();
+        Player.Instance.SetPauseState(false);
     }
 
     public void OnUpgradeButtonPress()
     {
+        SoundManager.Instance.PlayButton();
         CanvasMainGame.Instance.ShowToolsUpgradeMenu();
     }
 
+    public void OnSpeciesButtonPress()
+    {
+        SoundManager.Instance.PlayButton();
+        CanvasMainGame.Instance.ShowSpeciesMenu();
+    }
+    
     public void OnSettingsButtonPress()
     {
+        SoundManager.Instance.PlayButton();
         CanvasAllScenes.Instance.ShowSettingsGroup();
     }
     
     public void OnRespawnButtonPress()
     {
+        SoundManager.Instance.PlayButton();
         Time.timeScale = 1f;
         Player.Instance.Respawn();
         HideGroupPaused();
@@ -29,6 +39,7 @@ public class GroupPaused : MonoBehaviour
 
     public void OnQuitButtonPress()
     {
+        SoundManager.Instance.PlayButton();
         Time.timeScale = 1f;
         // TODO: Implement player data saving logic here
         GameManager.Instance.SaveGameData();
@@ -46,7 +57,7 @@ public class GroupPaused : MonoBehaviour
         GlobalUIController.ShowGroup(groupPaused);
     }
 
-    private void HideGroupPaused()
+    public void HideGroupPaused()
     {
         Time.timeScale = 1f;
         GlobalUIController.HideGroup(groupPaused);

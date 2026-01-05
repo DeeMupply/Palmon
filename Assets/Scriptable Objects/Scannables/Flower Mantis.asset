@@ -15,6 +15,6 @@ MonoBehaviour:
   scannableName: Flower Mantis
   scannableDescription: 
   scannableIcon: {fileID: 21300000, guid: 9f8eacc1d3a99774da5b343047ed3fe3, type: 3}
-  scansRequired: 20
+  scansRequired: 2
   scanTime: 2
-  adnPerScan: 20
+  adnPerScan: 200

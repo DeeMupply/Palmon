@@ -12,6 +12,7 @@ public class GroupMainButtons : MonoBehaviour
 
     public void OnStartButtonClicked()
     {
+        SoundManager.Instance.PlayButton();
         SceneManager.LoadScene(SceneNameManager.SCENE_GAMEPLAY);
     }
 
@@ -23,6 +24,7 @@ public class GroupMainButtons : MonoBehaviour
 
     public void OnQuitButtonClicked()
     {
+        SoundManager.Instance.PlayButton();
         if (Application.isEditor)
         {
             UnityEditor.EditorApplication.isPlaying = false;

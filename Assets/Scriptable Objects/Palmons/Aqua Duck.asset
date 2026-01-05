@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f4238db51ed0e449304b9b71fc5149, type: 3}
   m_Name: Aqua Duck
   m_EditorClassIdentifier: 
-  palmonName: New Palmon
-  moveSpeed: 3.5
+  palmonName: Aqua Duck
+  walkSpeed: 3.5
+  runSpeed: 6
   rotationSpeed: 2
   rotationThresholdAngle: 10
-  detectionRange: 5
+  detectionRange: 6
+  baitDetectionRange: 9
+  eatingRange: 1.33
   attackDamage: 10
-  attackRange: 2
+  attackRange: 4
   attackCooldown: 1

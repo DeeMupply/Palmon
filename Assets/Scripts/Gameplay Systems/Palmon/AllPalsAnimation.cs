@@ -27,16 +27,12 @@ public class AllPalsAnimation : PalmonAnimation
     public override void OnRotateWithoutMoving()
     {
         animator.speed = 1.0f;
-        animator.Play(palmonASM[PalmonAnimationKeys.Idle]);
+        animator.Play(palmonASM[PalmonAnimationKeys.Run]);
     }
 
-    public override void OnHit()
+    public override void OnEating()
     {
-        //
-    }
-
-    public override void OnDying()
-    {
-        //
+        animator.speed = 1.0f;
+        animator.Play(palmonASM[PalmonAnimationKeys.Eat]);
     }
 }

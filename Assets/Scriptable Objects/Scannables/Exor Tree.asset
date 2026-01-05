@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8b1891d2828f6c41a0c11c0e187618c, type: 3}
   m_Name: Exor Tree
   m_EditorClassIdentifier: 
-  scannableName: Exo Tree
+  scannableName: Exor Tree
   scannableDescription: 
   scannableIcon: {fileID: 21300000, guid: b58c14570b67eef4e8668c3fb08b6670, type: 3}
-  scansRequired: 30
+  scansRequired: 2
   scanTime: 2
-  adnPerScan: 10
+  adnPerScan: 100

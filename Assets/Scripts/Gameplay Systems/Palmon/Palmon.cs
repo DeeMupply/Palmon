@@ -15,11 +15,6 @@ public partial class Palmon : MonoBehaviour
     [SerializeField] private List<Palmon_OnEvent_Behaviour> palmonEventBehaviours;
     [SerializeField] private List<Palmon_OnEvent_Behaviour> secondaryEventBehaviours;
 
-    // Internal fields
-    [SerializeField] private PalmonState currentState;
-    // Implement palmon states and their transition conditions
-    private List<PalmonStateTransition> stateTransitions = new List<PalmonStateTransition>();
-
     [SerializeField] private bool isDrawingGizmos = true;
     public bool IsUsingNavMeshAgent { get; set; } = true;
     private Transform target;
@@ -48,8 +43,7 @@ public partial class Palmon : MonoBehaviour
             navMeshAgent.speed = palmonData.walkSpeed;
         }
         // Define state transitions
-        stateTransitions.Add(new PalmonStateTransition(PalmonState.Dying, ShouldDying));
-        stateTransitions.Add(new PalmonStateTransition(PalmonState.Hit, ShouldHit));
+        stateTransitions.Add(new PalmonStateTransition(PalmonState.Eating, ShouldEating));
         stateTransitions.Add(new PalmonStateTransition(PalmonState.RotateWithoutMoving, ShouldRotateWithoutMoving));
         stateTransitions.Add(new PalmonStateTransition(PalmonState.Attacking, ShouldAttacking));
         stateTransitions.Add(new PalmonStateTransition(PalmonState.Running, ShouldRunning));
@@ -61,8 +55,10 @@ public partial class Palmon : MonoBehaviour
 
     private void Update()
     {
+        UpdateTarget(); // Add this line at the top
+
         HandleUpdateAttackPosition();
-        if (currentState == PalmonState.Moving)
+        if (currentState == PalmonState.Moving || currentState == PalmonState.Running)
         {
             navigationUpdateTimer += Time.deltaTime;
             if (navigationUpdateTimer >= navigationUpdateInterval)
@@ -73,20 +69,29 @@ public partial class Palmon : MonoBehaviour
         }
         else
         {
-            navigationUpdateTimer = 0f; // reset timer if not moving
+            navigationUpdateTimer = 0f;
         }
 
         HandlePalmonStates();
         RotateWithoutMoving();
+        CheckBaitConsumption(); // Add this line at the end
     }
 
     private void HandleUpdateAttackPosition()
     {
-        if (currentState != PalmonState.Moving) return;
-        float distanceToTarget = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.position.x, target.position.z));
+        if (currentState != PalmonState.Moving && currentState != PalmonState.Running) return;
+        if (target == null) return;
+
+        // Only update attack position for Player targets
+        if (!target.TryGetComponent(out Player _)) return;
+
+        float distanceToTarget = Vector2.Distance(
+            new Vector2(transform.position.x, transform.position.z),
+            new Vector2(target.position.x, target.position.z)
+        );
+
         if (distanceToTarget < palmonData.attackRange)
         {
-            // Lock attack position to target's current position
             UpdateAttackPosition();
         }
     }
@@ -99,6 +104,7 @@ public partial class Palmon : MonoBehaviour
 
     public void UpdateAttackPosition()
     {
+        if (target == null) return;
         attackPosition = new Vector2(target.position.x, target.position.z);
     }
 
@@ -111,9 +117,17 @@ public partial class Palmon : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, palmonData.attackRange);
 
-            // Visualize the detection range
+            // Visualize the player detection range
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, palmonData.detectionRange);
+
+            // Visualize the bait detection range
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, palmonData.baitDetectionRange);
+
+            // Visualize the eating range
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(transform.position, palmonData.eatingRange);
         }
 
         Gizmos.color = Color.blue;
@@ -139,174 +153,6 @@ public partial class Palmon : MonoBehaviour
         Vector2 direction = (attackPosition - new Vector2(transform.position.x, transform.position.z)).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.y));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * palmonData.rotationSpeed);
-    }
-
-    private void HandlePalmonStates()
-    {
-        for (int i = 0; i < stateTransitions.Count; i++)
-        {
-            PalmonStateTransition stateTransition = stateTransitions[i];
-            if (stateTransition == null)
-            {
-                Debug.LogWarning("State transition is null at index: " + i);
-                continue;
-            }
-
-            if (stateTransition.ShouldTransition() && currentState != stateTransition.NewState)
-            {
-                OnPalmonStateChange(stateTransition.NewState);
-                return;
-            }
-        }
-        // Debug.LogWarning("No valid state transition found for current state: " + currentState);
-    }
-
-    private void OnPalmonStateChange(PalmonState newState)
-    {
-        currentState = newState;
-        UpdateAttackPosition();
-
-        switch (newState)
-        {
-            case PalmonState.Idle:
-                StopMoving();
-                break;
-            case PalmonState.Moving:
-                navMeshAgent.isStopped = false;
-                navMeshAgent.speed = palmonData.walkSpeed;
-                navMeshAgent.SetDestination(target.position);
-                break;
-            case PalmonState.Running:
-                navMeshAgent.isStopped = false;
-                navMeshAgent.speed = palmonData.runSpeed;
-                navMeshAgent.SetDestination(target.position);
-                break;
-            case PalmonState.Attacking:
-                StopMoving();
-                break;
-            case PalmonState.RotateWithoutMoving:
-                StopMoving();
-                break;
-            case PalmonState.Hit:
-                // Implement later
-                break;
-            case PalmonState.Dying:
-                StopMoving();
-                // Implement later: disable palmon
-                break;
-        }
-
-        palmonAnimation.OnPalmonStateChange(newState, this);
-    }
-
-
-    #endregion
-
-    #region Should State Transition Methods
-
-    private bool ShouldDying()
-    {
-        // Implement later: check health <= 0
-        if (currentState == PalmonState.Attacking) return false;
-        return false;
-    }
-    private bool ShouldHit()
-    {
-        // Implement later: check if hit by player
-        if (currentState == PalmonState.Attacking) return false;
-        return false;
-    }
-
-    private bool ShouldRotateWithoutMoving()
-    {
-        if (isSpecialAttacking) return false;
-        if (target == null) return false;
-        if (currentState == PalmonState.Attacking) return false;
-
-        // Target locked to attack position
-
-        float distanceToTarget = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), attackPosition);
-        // Don't rotate if too close or too far
-        if (distanceToTarget < 0.01f) return false;
-        if (distanceToTarget > palmonData.attackRange) return false;
-
-        // Project onto XZ plane
-        Vector2 toTarget = attackPosition - new Vector2(transform.position.x, transform.position.z);
-        Vector2 forward = new Vector2(transform.forward.x, transform.forward.z);
-        float angleToTarget = Vector2.Angle(forward, toTarget.normalized);
-
-        if (angleToTarget <= palmonData.rotationThresholdAngle) return false;
-        return true;
-    }
-
-    private bool ShouldAttacking()
-    {
-        if (hasJustAttacked) return false;
-        // Target locked to attack position
-
-        // Just attack if very close
-        float distanceToTarget = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), attackPosition);
-        if (distanceToTarget < 0.01f) return true;
-
-        // Check distance threshold
-        if (distanceToTarget > palmonData.attackRange) return false;
-
-        // Check angle threshold if within attack range
-        Vector2 toTarget = attackPosition - new Vector2(transform.position.x, transform.position.z);
-        Vector2 forward = new Vector2(transform.forward.x, transform.forward.z);
-        float angleToTarget = Vector2.Angle(forward, toTarget.normalized);
-        if (angleToTarget > palmonData.rotationThresholdAngle) return false;
-
-        return true;
-    }
-
-    private bool ShouldRunning()
-    {
-        if (isSpecialAttacking) return false;
-        if (target == null) return false;
-        if (!target.TryGetComponent(out Player _)) return false;
-        if (!IsUsingNavMeshAgent) return false;
-        if (currentState == PalmonState.Attacking) return false;
-
-        float distanceToTarget = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.position.x, target.position.z));
-        if (distanceToTarget > palmonData.detectionRange)
-        {
-            return false;
-        }
-        if (distanceToTarget > palmonData.attackRange && distanceToTarget <= palmonData.detectionRange)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    private bool ShouldMoving()
-    {
-        if (isSpecialAttacking) return false;
-        if (target == null) return false;
-        if (target.TryGetComponent(out Player _)) return false;
-        if (!IsUsingNavMeshAgent) return false;
-        if (currentState == PalmonState.Attacking) return false;
-
-        float distanceToTarget = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.position.x, target.position.z));
-        if (distanceToTarget > palmonData.attackRange && distanceToTarget <= palmonData.detectionRange)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    private bool ShouldIdle()
-    {
-        if (isSpecialAttacking) return false;
-        if (target == null) return true;
-        if (hasJustAttacked) return true;
-        float distanceToTarget = Vector2.Distance(new Vector2(transform.position.x, transform.position.z), new Vector2(target.position.x, target.position.z));
-        if (distanceToTarget > palmonData.detectionRange)
-        {
-            return true;
-        }
-        return false;
     }
 
     #endregion
@@ -406,40 +252,10 @@ public partial class Palmon : MonoBehaviour
 
     #endregion
 
-    public class PalmonStateTransition
-    {
-        public PalmonState NewState { get; private set; }
-        public Func<bool> ShouldTransition { get; private set; }
-        public PalmonStateTransition(PalmonState newState, Func<bool> shouldTransition)
-        {
-            NewState = newState;
-            ShouldTransition = shouldTransition;
-        }
-    }
-
     [ContextMenu("Log Palmon Nav Mesh Agent")]
     private void LogNavMeshAgent()
     {
         Debug.Log($"Is NavMeshAgent stopped: {navMeshAgent.isStopped}");
         Debug.Log($"NavMeshAgent target position: {navMeshAgent.destination}");
     }
-
-    private enum TargetDistanceCategory
-    {
-        OutOfRange,
-        InDetectionRange,
-        InAttackRange,
-        VeryClose
-    }
-}
-
-public enum PalmonState
-{
-    Idle,
-    RotateWithoutMoving,
-    Moving,
-    Running,
-    Attacking,
-    Hit,
-    Dying
 }

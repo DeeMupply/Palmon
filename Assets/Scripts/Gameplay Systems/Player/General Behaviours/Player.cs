@@ -7,6 +7,8 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
     [SerializeField] private Vector3 respawnPosition;
     [SerializeField] private Quaternion respawnRotation;
 
+    public event System.Action OnPlayerWin;
+
     private void Awake()
     {
         if (Instance == null)
@@ -16,6 +18,8 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
             playerInputActions.Player.SetCallbacks(this);
             playerInputActions.Player.Enable();
             InitializeTools();
+            InitScanHitBox();
+            InitializeInvisibility();
         }
         else
         {
@@ -92,6 +96,8 @@ public partial class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
         OnHealthChanged?.Invoke(currentHealth);
         OnStaminaChanged?.Invoke(currentStamina);
         ReplenishAllTools();
+
+        SetPauseState(false);
     }
 
     public Transform GetTransform()

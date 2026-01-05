@@ -25,12 +25,13 @@ public class GroupSettings : MonoBehaviour
     public void OnExitButtonClicked()
     {
         GlobalUIController.HideGroup(settingsGroup, 0.3f);
+        SoundManager.Instance.PlayButton();
         onCloseComplete?.Invoke();
     }
     public void OnSaveButtonClicked()
     {
         // Implement saving settings logic here
-
+        SoundManager.Instance.PlayButton();
         GlobalUIController.HideGroup(settingsGroup, 0.3f);
         onCloseComplete?.Invoke();
     }

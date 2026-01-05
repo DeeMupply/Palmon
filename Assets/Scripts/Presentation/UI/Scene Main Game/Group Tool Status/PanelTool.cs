@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class PanelTool : MonoBehaviour
 {
     [SerializeField] private Image toolIcon;
-    [SerializeField] private Image toolCooldownOverlay;
     [SerializeField] private Slider toolCooldownSlider;
     [SerializeField] private TextMeshProUGUI toolUsesText;
     [SerializeField] private TextMeshProUGUI toolCooldownText;
@@ -44,7 +43,6 @@ public class PanelTool : MonoBehaviour
     private void InitToolPanel()
     {
         toolIcon.sprite = toolSO.ToolIcon;
-        toolCooldownOverlay.sprite = toolSO.ToolIcon;
         toolCooldownSlider.maxValue = toolSO.CooldownTime;
     }
 

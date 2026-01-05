@@ -26,6 +26,7 @@ public class PanelScanQuest : MonoBehaviour
         {
             Player.Instance.OnAdnChanged += UpdateTotalAdn;
             Player.Instance.OnScansSubmitted += OnScansSubmitted;
+            Player.Instance.OnScanSuccess += OnSuccessfulScan;
         }
     }
 
@@ -35,6 +36,7 @@ public class PanelScanQuest : MonoBehaviour
         {
             Player.Instance.OnAdnChanged -= UpdateTotalAdn;
             Player.Instance.OnScansSubmitted -= OnScansSubmitted;
+            Player.Instance.OnScanSuccess -= OnSuccessfulScan;
         }
     }
 
@@ -170,12 +172,22 @@ public class PanelScanQuest : MonoBehaviour
 
     public void ShowGroupScanQuest()
     {
+        Player.Instance.SetPauseState(true);
         GlobalUIController.ShowGroup(canvasGroup);
     }
 
     public void HideGroupScanQuest()
     {
         GlobalUIController.HideGroup(canvasGroup);
+    }
+
+    public void OnSuccessfulScan(string scannableID)
+    {
+        var scanQuestEntry = GetScanQuestEntry(scannableID);
+        if (scanQuestEntry != null)
+        {
+            scanQuestEntry.OnSuccessfulScan();
+        }
     }
 
     public void OnScansSubmitted()
@@ -185,12 +197,14 @@ public class PanelScanQuest : MonoBehaviour
 
     public void OnSwitchTabButtonPressed()
     {
+        SoundManager.Instance.PlayButton();
         HideGroupScanQuest();
         CanvasMainGame.Instance.ShowToolsUpgradeMenu();
     }
 
     public void OnExitButtonClicked()
     {
+        SoundManager.Instance.PlayButton();
         HideGroupScanQuest();
     }
 

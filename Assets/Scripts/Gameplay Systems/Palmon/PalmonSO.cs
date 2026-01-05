@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Palmon", menuName = "Gameplay Systems/Palmon/Palmon")]
@@ -10,7 +9,11 @@ public class PalmonSO : ScriptableObject
     public float runSpeed = 6f;
     public float rotationSpeed = 2f;
     public float rotationThresholdAngle = 10f;
-    public float detectionRange = 5f;
+    
+    [Header("Detection Ranges")]
+    public float detectionRange = 5f; // Player detection range
+    public float baitDetectionRange = 7f; // Bait detection range (usually larger)
+    public float eatingRange = 2f;
     
     [Header("Combat Stats")]
     public float attackDamage = 10f;

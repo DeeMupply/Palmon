@@ -458,6 +458,9 @@ MonoBehaviour:
   healthRegenAmount: 20
   baitObjectPrefab: {fileID: 1015242303102009780, guid: 3645c1e32a412cc43972232f5b718328, type: 3}
   baitSpawnPoint: {fileID: 4892678150266007569}
+  detectDuration: 15
+  scannedPopupPrefab: {fileID: 7095170112317201699, guid: 882ff4d714023f041b37920099bf8581, type: 3}
+  popupSpawnParent: {fileID: 0}
 --- !u!114 &7178145470860237901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1537,7 +1540,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6683927440489739622}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1900,7 +1903,7 @@ GameObject:
   - component: {fileID: 7513049986811732374}
   - component: {fileID: 7947657233727403020}
   m_Layer: 9
-  m_Name: 330154
+  m_Name: Map Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1915,7 +1918,7 @@ Transform:
   m_GameObject: {fileID: 8513054628878952986}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 2.86, z: 0}
+  m_LocalPosition: {x: 0, y: 17.8, z: 0}
   m_LocalScale: {x: 15.4, y: 36.2, z: 24}
   m_ConstrainProportionsScale: 0
   m_Children: []

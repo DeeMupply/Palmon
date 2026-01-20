@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Ingame/Scene Main Menu.unity
-    guid: 5324f38f815103b48a799794839b602a
+    path: Assets/Scenes/Dev Personal/Trung/Scene Main Game.unity
+    guid: 19e6bfabf082c574aa4a6810063161e9
   - enabled: 1
-    path: Assets/Scenes/Ingame/Scene Main Game.unity
-    guid: 67c068339603bbf4c8f9484a9c84499b
+    path: Assets/Scenes/Dev Personal/Trung/Scene Main Menu.unity
+    guid: 52820b11ec530c8448ba21b19d5d8fb4
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -227,5 +227,6 @@ public enum PalmonState
     Moving,
     Running,
     Attacking,
-    Eating
+    Eating,
+    None
 }

@@ -1,3 +1,4 @@
+// v1.0 - Initial version of the Animation State Mapper Editor Window
 using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
